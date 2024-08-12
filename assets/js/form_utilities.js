@@ -69,6 +69,62 @@ function fullResetForm() {
     form.reset();
 }
 
+function downloadYAML() {
+
+    const config = {
+        training_id: document.getElementById("training_id").value,
+        surrogates: getSelectedSurrogates(),
+        dataset: {
+            name: document.getElementById("data-dataset").value,
+            log10_transform: document.getElementById("data-log10").checked,
+            normalise: document.getElementById("data-norm").value
+        },
+        devices: getSelectedDevices(),
+        seed: document.getElementById("misc-seed").value,
+        verbose: document.getElementById("misc-verbose").checked,
+        losses: document.getElementById("bench-losses").checked,
+        dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
+        timing: document.getElementById("bench-timing").checked,
+        compute: document.getElementById("bench-compute").checked,
+        interpolation: {
+            enabled: document.getElementById("bench-interpolation").checked,
+            intervals: getInterpolationIntervals()
+        },
+        extrapolation: {
+            enabled: document.getElementById("bench-extrapolation").checked,
+            cutoffs: getExtrapolationCutoffs()
+        },
+        sparse: {
+            enabled: document.getElementById("bench-sparse").checked,
+            factors: getSparseFactors()
+        },
+        batch_scaling: {
+            enabled: false,
+            sizes: []
+        },
+        UQ: {
+            enabled: document.getElementById("bench-uq").checked,
+            n_models: document.getElementById("bench-extrapol_cutoffs").value
+        },
+        compare: document.getElementById("model-compare").checked,
+        batch_size: [],
+        epochs: []
+    };
+
+    const yamlConfig = jsyaml.dump(config);
+
+    window.generatedYaml = yamlConfig;
+
+    const blob = new Blob([window.generatedYaml], {type: "text/yaml"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'config.yaml';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 function downloadConfig() {
     const config = {
         training_id: document.getElementById("training_id").value,
