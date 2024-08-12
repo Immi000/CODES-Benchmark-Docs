@@ -110,25 +110,15 @@ function downloadYAML() {
         batch_size: [],
         epochs: []
     };
-
     const yamlConfig = jsyaml.dump(config);
 
-    window.generatedYaml = yamlConfig;
-
-    const blob = new Blob([window.generatedYaml], {type: "text/yaml"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'config.yaml';
-    const mouseEvent = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-    a.dispatchEvent(mouseEvent);
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
+    const element = document.createElement("a");
+    element.setAttribute("href", "data:text/yaml;charset=utf-8," + encodeURIComponent(yamlConfig));
+    element.setAttribute("download", "config.yaml");
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
 }
 
 function downloadConfig() {
