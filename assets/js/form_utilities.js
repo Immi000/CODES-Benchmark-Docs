@@ -120,9 +120,15 @@ function downloadYAML() {
     const a = document.createElement('a');
     a.href = url;
     a.download = 'config.yaml';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const mouseEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+    a.dispatchEvent(mouseEvent);
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
 }
 
 function downloadConfig() {
