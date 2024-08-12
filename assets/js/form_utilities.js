@@ -170,15 +170,24 @@ function downloadConfig() {
         config.batch_size.push(batchsize);
         config.epochs.push(epochs);
     });
-
+    console.log("Config:");
+    console.log(config);
     const yamlContent = jsyaml.dump(config);
+    console.log(yamlContent);
     const element = document.createElement("a");
+    console.log("Element created");
     element.setAttribute("href", "data:text/yaml;charset=utf-8," + encodeURIComponent(yamlContent));
+    console.log("Element href set");
     element.setAttribute("download", "config.yaml");
+    console.log("Element download set");
     element.style.display = "none";
+    console.log("Element display set");
     document.body.appendChild(element);
+    console.log("Element appended");
     element.click();
+    console.log("Element clicked");
     document.body.removeChild(element);
+    console.log("Element removed");
 }
 
 function getSelectedSurrogates() {
