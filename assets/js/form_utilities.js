@@ -69,18 +69,133 @@ function fullResetForm() {
     form.reset();
 }
 
+function validateConfigForm() {
+    const requiredFields = ["training_id", "data-dataset", "misc-seed"];
+    const requiredFieldLabels = ["Training ID", "Dataset", "Seed"];
+    const surrogateLabels = ["Fully connected NN", "DeepONet", "Latent Neural ODE", "Latent Polynomial"];
+    for (var i = 0; i < requiredFields.length; i++) {
+        var field = document.getElementById(requiredFields[i]);
+        if (field.value == "") {
+            alert("Field " + requiredFieldLabels[i] + " is required");
+            return false;
+        }
+    }
+
+    const [surrogates, surrogateParams] = getSelectedSurrogatesWithParams();
+    const [customModels, customModelParams] = getCustomModelsWithParams();
+    if (surrogates.length == 0 && customModels.length == 0) {
+        alert("At least one surrogate model must be selected");
+        return false;
+    }
+    for (var i = 0; i < surrogates.length; i++) {
+        const batchsize = surrogateParams[surrogates[i]].batchsize;
+        const epochs = surrogateParams[surrogates[i]].epochs;
+        if (batchsize == "" || isNaN(batchsize)) {
+            alert("Batch size for " + surrogateLabels[i] + " is required and must be a number");
+            return false;
+        }
+        if (epochs == "" || isNaN(epochs)) {
+            alert("Number of epochs for " + surrogateLabels[i] + " is required and must be a number");
+            return false;
+        }
+    }
+
+    for (var i = 0; i < customModels.length; i++) {
+        const model = customModels[i];
+        if (model == "") {
+            continue;
+        }
+        const batchsize = customModelParams[customModels[i]].batchsize;
+        const epochs = customModelParams[customModels[i]].epochs;
+        if (batchsize == "" || isNaN(batchsize)) {
+            alert("Batch size for " + customModels[i] + " is required and must be a number");
+            return false;
+        }
+        if (epochs == "" || isNaN(epochs)) {
+            alert("Number of epochs for " + customModels[i] + " is required and must be a number");
+            return false;
+        }
+    }
+
+    if (document.getElementById("bench-interpolation").checked) {
+        const intervals = document.getElementById("bench-interpol_ts").value;
+        if (intervals == "") {
+            alert("Interpolation intervals are required when active");
+            return false;
+        }
+        if (intervals.split(",").some(interval => isNaN(interval))) {
+            alert("Interpolation intervals must be numbers");
+            return false;
+        }
+    }
+
+    if (document.getElementById("bench-extrapolation").checked) {
+        const cutoffs = document.getElementById("bench-extrapol_cutoffs").value;
+        if (cutoffs == "") {
+            alert("Extrapolation cutoffs are required when active");
+            return false;
+        }
+        if (cutoffs.split(",").some(cutoff => isNaN(cutoff))) {
+            alert("Extrapolation cutoffs must be numbers");
+            return false;
+        }
+    }
+
+    if (document.getElementById("bench-sparse").checked) {
+        const factors = document.getElementById("bench-sparse_factors").value;
+        if (factors == "") {
+            alert("Sparse factors are required when active");
+            return false;
+        }
+        if (factors.split(",").some(factor => isNaN(factor))) {
+            alert("Sparse factors must be numbers");
+            return false;
+        }
+    }
+
+    if (document.getElementById("bench-uq").checked) {
+        const uq_samples = document.getElementById("bench-uq_ensemble_size").value;
+        if (uq_samples == "") {
+            alert("UQ samples are required when active");
+            return false;
+        }
+        if (isNaN(uq_samples)) {
+            alert("UQ samples must be a number");
+            return false;
+        }
+    }
+
+    const seed = document.getElementById("misc-seed").value;
+    if (seed == "") {
+        alert("Seed is required");
+        return false;
+    }
+    if (isNaN(seed)) {
+        alert("Seed must be a number");
+        return false;
+    }
+    return true;
+}
+
+
 function downloadYAML() {
 
+    if (!validateConfigForm()) {
+        return;
+    }
+    const trainingId = `${document.getElementById("training_id").value}`;
+    const datasetName = `${document.getElementById("data-dataset").value}`;
+
     const config = {
-        training_id: document.getElementById("training_id").value,
-        surrogates: getSelectedSurrogates(),
+        training_id: String(trainingId),
+        surrogates: getSurrogateListString(),
         dataset: {
-            name: document.getElementById("data-dataset").value,
+            name: String(datasetName),
             log10_transform: document.getElementById("data-log10").checked,
-            normalise: document.getElementById("data-norm").value
+            normalise: String(document.getElementById("data-norm").value)
         },
         devices: getSelectedDevices(),
-        seed: document.getElementById("misc-seed").value,
+        seed: Number(document.getElementById("misc-seed").value),
         verbose: document.getElementById("misc-verbose").checked,
         losses: document.getElementById("bench-losses").checked,
         dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
@@ -98,19 +213,44 @@ function downloadYAML() {
             enabled: document.getElementById("bench-sparse").checked,
             factors: getSparseFactors()
         },
-        batch_scaling: {
-            enabled: false,
-            sizes: []
-        },
-        UQ: {
+        uq: {
             enabled: document.getElementById("bench-uq").checked,
-            n_models: document.getElementById("bench-extrapol_cutoffs").value
+            ensemble_size: Number(document.getElementById("bench-uq_ensemble_size").value),
         },
-        compare: document.getElementById("model-compare").checked,
-        batch_size: [],
-        epochs: []
+        compare: document.getElementById("misc-compare").checked,
+        batch_size: getBatchSizeList(),
+        epochs: getEpochList()
     };
-    const yamlConfig = jsyaml.dump(config);
+
+    function Format(data) {
+        if (!(this instanceof Format)) return new Format(data);
+        this.data = data;
+    }
+
+    let CustomFormatType = new jsyaml.Type('!format', {
+        kind: 'scalar',
+        resolve: () => false,
+        instanceOf: Format,
+        represent: f => f.data
+    });
+
+    let schema = jsyaml.DEFAULT_SCHEMA.extend({ implicit: [CustomFormatType] });
+
+    function replacer(key, value) {
+        if (Array.isArray(value) && !value.filter(x => typeof x !== 'number').length) {
+            return Format(jsyaml.dump(value, { flowLevel: 0 }).trim());
+        }
+        return value;
+    }
+
+    const yamlConfig = jsyaml.dump(config,
+        {
+            schema: schema,
+            replacer: replacer,
+            forceQuotes: true,
+            quotingType: '"',
+            flowLevel: 2,
+        });
 
     const element = document.createElement("a");
     element.setAttribute("href", "data:text/yaml;charset=utf-8," + encodeURIComponent(yamlConfig));
@@ -121,120 +261,114 @@ function downloadYAML() {
     document.body.removeChild(element);
 }
 
-function downloadConfig() {
-    const config = {
-        training_id: document.getElementById("training_id").value,
-        surrogates: getSelectedSurrogates(),
-        dataset: {
-            name: document.getElementById("data-dataset").value,
-            log10_transform: document.getElementById("data-log10").checked,
-            normalise: document.getElementById("data-norm").value
-        },
-        devices: getSelectedDevices(),
-        seed: document.getElementById("misc-seed").value,
-        verbose: document.getElementById("misc-verbose").checked,
-        losses: document.getElementById("bench-losses").checked,
-        dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
-        timing: document.getElementById("bench-timing").checked,
-        compute: document.getElementById("bench-compute").checked,
-        interpolation: {
-            enabled: document.getElementById("bench-interpolation").checked,
-            intervals: getInterpolationIntervals()
-        },
-        extrapolation: {
-            enabled: document.getElementById("bench-extrapolation").checked,
-            cutoffs: getExtrapolationCutoffs()
-        },
-        sparse: {
-            enabled: document.getElementById("bench-sparse").checked,
-            factors: getSparseFactors()
-        },
-        batch_scaling: {
-            enabled: false,
-            sizes: []
-        },
-        UQ: {
-            enabled: document.getElementById("bench-uq").checked,
-            n_models: document.getElementById("bench-extrapol_cutoffs").value
-        },
-        compare: document.getElementById("model-compare").checked,
-        batch_size: [],
-        epochs: []
-    };
-
-    // Get batch sizes and epochs for each surrogate
-    const surrogates = ["model-fcnn", "model-deeponet", "model-latent_poly"];
+function getSelectedSurrogatesWithParams() {
+    const surrogates = getSelectedSurrogates();
+    const surrogateParams = {};
     surrogates.forEach(surrogate => {
-        const batchsize = document.getElementById(`model-${surrogate}_batchsize`).value;
-        const epochs = document.getElementById(`model-${surrogate}_epochs`).value;
-        config.batch_size.push(batchsize);
-        config.epochs.push(epochs);
+        const batchsize = document.getElementById(`${surrogate}_batchsize`).value;
+        const epochs = document.getElementById(`${surrogate}_epochs`).value;
+        surrogateParams[surrogate] = {
+            batchsize: batchsize,
+            epochs: epochs
+        };
     });
-    console.log("Config:");
-    console.log(config);
-    const yamlContent = jsyaml.dump(config);
-    console.log(yamlContent);
-    const element = document.createElement("a");
-    console.log("Element created");
-    element.setAttribute("href", "data:text/yaml;charset=utf-8," + encodeURIComponent(yamlContent));
-    console.log("Element href set");
-    element.setAttribute("download", "config.yaml");
-    console.log("Element download set");
-    element.style.display = "none";
-    console.log("Element display set");
-    document.body.appendChild(element);
-    console.log("Element appended");
-    element.click();
-    console.log("Element clicked");
-    document.body.removeChild(element);
-    console.log("Element removed");
+    return [surrogates, surrogateParams];
 }
 
 function getSelectedSurrogates() {
     const surrogates = [];
-    const surrogateCheckboxes = document.querySelectorAll('input[name^="model-"]');
+    const surrogateCheckboxes = document.querySelectorAll('input[id^="model-"]');
     surrogateCheckboxes.forEach(checkbox => {
         if (checkbox.checked) {
-            surrogates.push(checkbox.id.replace("model-", ""));
+            surrogates.push(checkbox.id);
         }
     });
     return surrogates;
 }
 
-function getSelectedDevices() {
-    const devices = [];
-    const deviceCheckboxes = document.querySelectorAll('input[name="misc-devices"]');
-    deviceCheckboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            devices.push(checkbox.value);
-        }
+function getCustomModelsWithParams() {
+    const customModels = [];
+    const customModelParams = {};
+    customModelIDs.forEach(id => {
+        const model = document.getElementById(`custom-model-${id}`).value;
+        const batchsize = document.getElementById(`custom-model-${id}-batchsize`).value;
+        const epochs = document.getElementById(`custom-model-${id}-epochs`).value;
+        customModels.push(model);
+        customModelParams[model] = {
+            batchsize: batchsize,
+            epochs: epochs
+        };
     });
-    return devices;
+    return [customModels, customModelParams];
+}
+
+function getSelectedDevices() {
+    const deviceString = document.getElementById("misc-devices").value;
+    if (!deviceString) {
+        return "cpu";
+    }
+    return deviceString.split(",").map(device => device.trim());
 }
 
 function getInterpolationIntervals() {
-    const intervals = [];
-    const intervalInput = document.getElementById("bench-interpol_ts").value;
-    if (intervalInput) {
-        intervals = intervalInput.split(",").map(interval => parseInt(interval.trim()));
-    }
-    return intervals;
+    return getIntListFromElement("bench-interpol_ts");
 }
 
 function getExtrapolationCutoffs() {
-    const cutoffs = [];
-    const cutoffInput = document.getElementById("bench-extrapol_cutoffs").value;
-    if (cutoffInput) {
-        cutoffs = cutoffInput.split(",").map(cutoff => parseInt(cutoff.trim()));
-    }
-    return cutoffs;
+    return getIntListFromElement("bench-extrapol_cutoffs");
 }
 
 function getSparseFactors() {
-    const factors = [];
-    const factorInput = document.getElementById("bench-extrapol_cutoffs").value;
-    if (factorInput) {
-        factors = factorInput.split(",").map(factor => parseInt(factor.trim()));
+    return getIntListFromElement("bench-sparse_factors");
+}
+
+function getIntListFromElement(elementId) {
+    const element = document.getElementById(elementId);
+    const value = element.value;
+    if (value) {
+        return value.split(",").map(val => parseInt(val.trim()));
     }
-    return factors;
+    return [];
+}
+
+function getSurrogateListString() {
+    const surrogateNames = {
+        "model-fcnn": "FullyConnected",
+        "model-deeponet": "MultiONet",
+        "model-latent_node": "LatentNeuralODE",
+        "model-latent_poly": "LatentPolynomial"
+    }
+    const customSurrogates = getCustomModelsWithParams()[0];
+    customSurrogates.forEach(model => {
+        surrogateNames[model] = model;
+    });
+    const surrogates = getSelectedSurrogates();
+    surrogates.push(...getCustomModelsWithParams()[0]);
+    return surrogates.map(surrogate => surrogateNames[surrogate]);
+}
+
+function getBatchSizeList() {
+    const [surrogates, surrogateParams] = getSelectedSurrogatesWithParams();
+    const [customModels, customModelParams] = getCustomModelsWithParams();
+    const batchSizes = [];
+    surrogates.forEach(surrogate => {
+        batchSizes.push(Number(surrogateParams[surrogate].batchsize));
+    });
+    customModels.forEach(model => {
+        batchSizes.push(Number(customModelParams[model].batchsize));
+    });
+    return batchSizes;
+}
+
+function getEpochList() {
+    const [surrogates, surrogateParams] = getSelectedSurrogatesWithParams();
+    const [customModels, customModelParams] = getCustomModelsWithParams();
+    const epochs = [];
+    surrogates.forEach(surrogate => {
+        epochs.push(Number(surrogateParams[surrogate].epochs));
+    });
+    customModels.forEach(model => {
+        epochs.push(Number(customModelParams[model].epochs));
+    });
+    return epochs;
 }

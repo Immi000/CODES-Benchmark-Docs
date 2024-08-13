@@ -41,7 +41,7 @@
 				<hr />
 				<section>
 					<h2>Config Generator</h2>
-					<form method="get" action="#">
+					<form method="get" action="#" id="config-form">
 						<section>
 							<h3>Name of Configuration</h3>
 							<div class="col-6 col-12-xsmall">
@@ -118,8 +118,8 @@
 							</div>
 
 							<div class="col-6 col-12-small" style="margin-top: 0.4rem;">
-								<input type="checkbox" id="model-compare" name="model-compare">
-								<label for="model-compare">Compare models with each other</label>
+								<input type="checkbox" id="misc-compare" name="misc-compare">
+								<label for="misc-compare">Compare models with each other</label>
 							</div>
 
 						</section>
@@ -136,9 +136,9 @@
 							</div>
 							<div class="col-12">
 								<select name="data-norm" id="data-norm">
-									<option value="">Standardize</option>
-									<option value="1">Min-Max Normalize [-1, 1]</option>
-									<option value="1">None</option>
+									<option value="standardise">Standardize</option>
+									<option value="minmax">Min-Max Normalize [-1, 1]</option>
+									<option value="disable">None</option>
 								</select>
 							</div>
 						</section>
@@ -146,15 +146,15 @@
 						<section style="margin-top: 2rem;">
 							<h3>Benchmark</h3>
 							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-losses" name="bench-losses">
+								<input type="checkbox" id="bench-losses" name="bench-losses" checked>
 								<label for="bench-losses">Save and plot losses</label>
 							</div>
 							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-dyn_acc" name="bench-dyn_acc">
+								<input type="checkbox" id="bench-dyn_acc" name="bench-dyn_acc" checked>
 								<label for="bench-dyn_acc">Save and plot dynamic accuracy</label>
 							</div>
 							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-timing" name="bench-timing">
+								<input type="checkbox" id="bench-timing" name="bench-timing" checked>
 								<label for="bench-timing">Save and plot the timing</label>
 							</div>
 							<div class="col-6 col-12-small">
@@ -204,7 +204,7 @@
 									<li style="width: 40%; display: flex; align-items: center;">Take every n-th
 										sample
 									</li>
-									<li><input type="text" name="bench-extrapol_cutoffs" id="bench-extrapol_cutoffs"
+									<li><input type="text" name="bench-sparse_factors" id="bench-sparse_factors"
 											value="" placeholder="2, 4, 8, ..."></li>
 								</ul>
 							</div>
@@ -218,7 +218,7 @@
 							<div class="col-6 col-12-xsmall" id="div-uq_params" style="display: none;">
 								<ul class="actions fit">
 									<li style="width: 40%; display: flex; align-items: center;">Ensemble size</li>
-									<li><input type="text" name="bench-extrapol_cutoffs" id="bench-extrapol_cutoffs"
+									<li><input type="text" name="bench-uq_ensemble_size" id="bench-uq_ensemble_size"
 											value="" placeholder="Number of models"></li>
 								</ul>
 							</div>
@@ -227,14 +227,14 @@
 								<h3>Misc</h3>
 								<div class="col-6 col-12-xsmall">
 									<input type="text" name="misc-devices" id="misc-devices" value=""
-										placeholder="Devices to train on (e.g. cuda:0)" />
+										placeholder="Devices to train on (e.g. cuda:0, cuda:1, ...), default cpu" />
 								</div>
 								<div class="col-6 col-12-small" style="margin-top: 0.4rem;">
 									<input type="checkbox" id="misc-verbose" name="misc-verbose">
 									<label for="misc-verbose">Verbose output</label>
 								</div>
 								<div class="col-6 col-12-xsmall">
-									<input type="text" name="misc-seed" id="misc-dataset" value="42"
+									<input type="text" name="misc-seed" id="misc-seed" value="42"
 										placeholder="Random seed" />
 								</div>
 
@@ -244,7 +244,8 @@
 						<hr />
 						<section>
 							<ul class="actions">
-								<li><input type="submit" value="Generate Config" class="primary" onclick="downloadYAML()" /></li>
+								<li><input type="button" value="Generate Config" class="primary"
+										onclick="downloadYAML()" /></li>
 								<li><input type="reset" value="Reset" onclick="fullResetForm()" /></li>
 							</ul>
 						</section>
@@ -256,6 +257,7 @@
 
 		</section>
 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 		<script src="assets/js/form_utilities.js"></script>
 
 	</div>
