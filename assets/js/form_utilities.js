@@ -1,5 +1,11 @@
 
 var customModelIDs = [];
+const surrogateNames = {
+    "model-fcnn": "FullyConnected",
+    "model-deeponet": "MultiONet",
+    "model-latent_node": "LatentNeuralODE",
+    "model-latent_poly": "LatentPolynomial"
+}
 
 function toggleElementVisible(textFieldId, isChecked) {
     var textField = document.getElementById(textFieldId);
@@ -72,7 +78,7 @@ function fullResetForm() {
 function validateConfigForm() {
     const requiredFields = ["training_id", "data-dataset", "misc-seed"];
     const requiredFieldLabels = ["Training ID", "Dataset", "Seed"];
-    const surrogateLabels = ["Fully connected NN", "DeepONet", "Latent Neural ODE", "Latent Polynomial"];
+    // const surrogateLabels = ["Fully connected NN", "DeepONet", "Latent Neural ODE", "Latent Polynomial"];
     for (var i = 0; i < requiredFields.length; i++) {
         var field = document.getElementById(requiredFields[i]);
         if (field.value == "") {
@@ -91,11 +97,11 @@ function validateConfigForm() {
         const batchsize = surrogateParams[surrogates[i]].batchsize;
         const epochs = surrogateParams[surrogates[i]].epochs;
         if (batchsize == "" || isNaN(batchsize)) {
-            alert("Batch size for " + surrogateLabels[i] + " is required and must be a number");
+            alert("Batch size for " + surrogateNames[surrogates[i]] + " is required and must be a number");
             return false;
         }
         if (epochs == "" || isNaN(epochs)) {
-            alert("Number of epochs for " + surrogateLabels[i] + " is required and must be a number");
+            alert("Number of epochs for " + surrogateNames[surrogates[i]] + " is required and must be a number");
             return false;
         }
     }
@@ -153,14 +159,26 @@ function validateConfigForm() {
         }
     }
 
+    if (document.getElementById("bench-batch_scaling").checked) {
+        const batch_scaling = document.getElementById("bench-batch_scaling_factors").value;
+        if (batch_scaling == "") {
+            alert("Batch scaling factors are required when active");
+            return false;
+        }
+        if (batch_scaling.split(",").some(factor => isNaN(factor))) {
+            alert("Batch scaling factors must be numbers");
+            return false;
+        }
+    }
+
     if (document.getElementById("bench-uq").checked) {
         const uq_samples = document.getElementById("bench-uq_ensemble_size").value;
         if (uq_samples == "") {
-            alert("UQ samples are required when active");
+            alert("Uncertainty quantification number of samples are required when active");
             return false;
         }
         if (isNaN(uq_samples)) {
-            alert("UQ samples must be a number");
+            alert("Uncertainty quantification samples must be a number");
             return false;
         }
     }
@@ -213,7 +231,11 @@ function downloadYAML() {
             enabled: document.getElementById("bench-sparse").checked,
             factors: getSparseFactors()
         },
-        uq: {
+        batch_scaling: {
+            enabled: document.getElementById("bench-batch_scaling").checked,
+            factors: getBatchScalingFactors()
+        },
+        uncertainty: {
             enabled: document.getElementById("bench-uq").checked,
             ensemble_size: Number(document.getElementById("bench-uq_ensemble_size").value),
         },
@@ -321,6 +343,9 @@ function getExtrapolationCutoffs() {
 function getSparseFactors() {
     return getIntListFromElement("bench-sparse_factors");
 }
+function getBatchScalingFactors() {
+    return getIntListFromElement("bench-batch_scaling_factors");
+}
 
 function getIntListFromElement(elementId) {
     const element = document.getElementById(elementId);
@@ -332,12 +357,6 @@ function getIntListFromElement(elementId) {
 }
 
 function getSurrogateListString() {
-    const surrogateNames = {
-        "model-fcnn": "FullyConnected",
-        "model-deeponet": "MultiONet",
-        "model-latent_node": "LatentNeuralODE",
-        "model-latent_poly": "LatentPolynomial"
-    }
     const customSurrogates = getCustomModelsWithParams()[0];
     customSurrogates.forEach(model => {
         surrogateNames[model] = model;

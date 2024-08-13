@@ -209,6 +209,22 @@
 								</ul>
 							</div>
 
+							<h4>Batch size scaling</h4>
+							<div class="col-6 col-12-small">
+								<input type="checkbox" id="bench-batch_scaling" name="bench-batch_scaling"
+									onchange="toggleElementVisible('div-batch_scaling_params', this.checked)">
+								<label for="bench-batch_scaling">Batch size scaling</label>
+							</div>
+							<div class="col-6 col-12-xsmall" id="div-batch_scaling_params" style="display: none;">
+								<ul class="actions fit">
+									<li style="width: 40%; display: flex; align-items: center;">Batch sizes to evaluate
+									</li>
+									</li>
+									<li><input type="text" name="bench-batch_scaling_factors" id="bench-batch_scaling_factors" value=""
+											placeholder="128, 256, ..."></li>
+								</ul>
+							</div>
+
 							<h4>Uncertainty Quantification</h4>
 							<div class="col-6 col-12-small">
 								<input type="checkbox" id="bench-uq" name="bench-uq"
