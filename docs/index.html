@@ -1,302 +1,147 @@
-<!-- Hyperspace by HTML5 UP
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
 	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license) -->
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
+	<head>
+		<title>CODES</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
 
-<head>
-	<title>Configuration</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
-</head>
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Home</a></li>
+							<li><a href="#one">About</a></li>
+							<li><a href="#two">Furhter information</a></li>
+							<!-- <li><a href="#three">Documentation</a></li> -->
+						</ul>
+					</nav>
+				</div>
+			</section>
 
-<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-	<!-- Header -->
-	<header id="header">
-		<a href="index.html" class="title">DON-VS-NODE Benchmark</a>
-		<nav>
-			<ul>
-				<!-- <li><a href="index.html">Home</a></li> -->
-				<!-- <li><a href="generic.html" class="active">Generic</a></li> -->
-				<!-- <li><a href="elements.html">Elements</a></li> -->
-				<li><a href="https://github.com/robin-janssen/DON-vs-NODE/" class="icon brands fa-github"
-						style="font-size: 24px;"><span class="label">Github</span></a></li>
-			</ul>
-		</nav>
-	</header>
-
-	<!-- Wrapper -->
-	<div id="wrapper">
-
-		<!-- Main -->
-		<section id="main" class="wrapper">
-			<div class="inner">
-				<h1 class="major">Configuration</h1>
-				<!-- <span class="image fit"><img src="images/pic04.jpg" alt="" /></span> -->
-				<p>This page serves as an interacitve config generator.</p>
-				<hr />
-				<section>
-					<h2>Config Generator</h2>
-					<form method="get" action="#" id="config-form">
-						<section>
-							<h3>Name of Configuration</h3>
-							<div class="col-6 col-12-xsmall">
-								<input type="text" name="training_id" id="training_id" value=""
-									placeholder="Training ID" />
-							</div>
-						</section>
-
-						<section style="margin-top: 2rem;">
-							<h3>Surrogates to include</h3>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-fcnn" name="model-fcnn"
-									onclick="toggleElementVisible('div-fcnn_params', this.checked)">
-								<label for="model-fcnn">Fully connected Neural Network</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-fcnn_params" style="display: none;">
-								<ul class="actions fit">
-									<li><input type="text" name="model-fcnn_batchsize" id="model-fcnn_batchsize"
-											value="" placeholder="Batch size"></li>
-									<li><input type="text" name="model-fcnn_epochs" id="model-fcnn_epochs" value=""
-											placeholder="Number of epochs"></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-deeponet" name="model-deeponet"
-									onclick="toggleElementVisible('div-deeponet_params', this.checked)">
-								<label for="model-deeponet">Deep Operator Network</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-deeponet_params" style="display: none;">
-								<ul class="actions fit">
-									<li><input type="text" name="model-deeponet_batchsize" id="model-deeponet_batchsize"
-											value="" placeholder="Batch size"></li>
-									<li><input type="text" name="model-deeponet_epochs" id="model-deeponet_epochs"
-											value="" placeholder="Number of epochs"></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-latent_node" name="model-latent_node"
-									onclick="toggleElementVisible('div-latent_node_params', this.checked)">
-								<label for="model-latent_node">Latent Neural ODE</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-latent_node_params" style="display: none;">
-								<ul class="actions fit">
-									<li><input type="text" name="model-latent_node_batchsize"
-											id="model-latent_node_batchsize" value="" placeholder="Batch size"></li>
-									<li><input type="text" name="model-latent_node_epochs" id="model-latent_node_epochs"
-											value="" placeholder="Number of epochs">
-									</li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-latent_poly" name="model-latent_poly"
-									onclick="toggleElementVisible('div-latent_poly_params', this.checked)">
-								<label for="model-latent_poly">Latent Polynomial Network</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-latent_poly_params" style="display: none;">
-								<ul class="actions fit">
-									<li><input type="text" name="model-latent_poly_batchsize"
-											id="model-latent_poly_batchsize" value="" placeholder="Batch size"></li>
-									<li><input type="text" name="model-latent_poly_epochs" id="model-latent_poly_epochs"
-											value="" placeholder="Number of epochs">
-									</li>
-								</ul>
-							</div>
-
-							<div id="custom-models-container"></div>
-
-							<div class="actions">
-								<a class="button primary icon solid fa-plus" onclick="addCustomModel()">Add
-									model</a>
-							</div>
-
-							<div class="col-6 col-12-small" style="margin-top: 0.4rem;">
-								<input type="checkbox" id="misc-compare" name="misc-compare">
-								<label for="misc-compare">Compare models with each other</label>
-							</div>
-
-						</section>
-
-						<section style="margin-top: 2rem;">
-							<h3>Dataset</h3>
-							<div class="col-6 col-12-xsmall">
-								<input type="text" name="data-dataset" id="data-dataset" value=""
-									placeholder="Dataset name (e.g. 'osu2008')" />
-							</div>
-							<div class="col-6 col-12-small" style="margin-top: 0.5rem;">
-								<input type="checkbox" id="data-log10" name="data-log10">
-								<label for="data-log10">Take the logarithm of the data</label>
-							</div>
-							<div class="col-12">
-								<select name="data-norm" id="data-norm">
-									<option value="standardise">Standardize</option>
-									<option value="minmax">Min-Max Normalize [-1, 1]</option>
-									<option value="disable">None</option>
-								</select>
-							</div>
-						</section>
-
-						<section style="margin-top: 2rem;">
-							<h3>Benchmark</h3>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-losses" name="bench-losses" checked>
-								<label for="bench-losses">Save and plot losses</label>
-							</div>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-dyn_acc" name="bench-dyn_acc" checked>
-								<label for="bench-dyn_acc">Save and plot dynamic accuracy</label>
-							</div>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-timing" name="bench-timing" checked>
-								<label for="bench-timing">Save and plot the timing</label>
-							</div>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-compute" name="bench-compute">
-								<label for="bench-compute">Compute?</label>
-							</div>
-
-							<h4>Interpolation</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-interpolation" name="bench-interpolation"
-									onchange="toggleElementVisible('div-interpolation_params', this.checked)">
-								<label for="bench-interpolation">Interpolation</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-interpolation_params" style="display: none;">
-								<ul class="actions fit">
-									<li style="width: 40%; display: flex; align-items: center;">Use every n-th
-										timestep
-									</li>
-									<li><input type="text" name="bench-interpol_ts" id="bench-interpol_ts" value=""
-											placeholder="2, 3, ..."></li>
-								</ul>
-							</div>
-
-							<h4>Extrapolation</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-extrapolation" name="bench-extrapolation"
-									onchange="toggleElementVisible('div-extrapolation_params', this.checked)">
-								<label for="bench-extrapolation">Extrapolation</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-extrapolation_params" style="display: none;">
-								<ul class="actions fit">
-									<li style="width: 40%; display: flex; align-items: center;">Cutoff at timestep n
-									</li>
-									<li><input type="text" name="bench-extrapol_cutoffs" id="bench-extrapol_cutoffs"
-											value="" placeholder="50, 60, ..."></li>
-								</ul>
-							</div>
-
-							<h4>Performance on trainingdata subset</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-sparse" name="bench-sparse"
-									onchange="toggleElementVisible('div-sparse_params', this.checked)">
-								<label for="bench-sparse">Sparse training data</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-sparse_params" style="display: none;">
-								<ul class="actions fit">
-									<li style="width: 40%; display: flex; align-items: center;">Take every n-th
-										sample
-									</li>
-									<li><input type="text" name="bench-sparse_factors" id="bench-sparse_factors"
-											value="" placeholder="2, 4, 8, ..."></li>
-								</ul>
-							</div>
-
-							<h4>Batch size scaling</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-batch_scaling" name="bench-batch_scaling"
-									onchange="toggleElementVisible('div-batch_scaling_params', this.checked)">
-								<label for="bench-batch_scaling">Batch size scaling</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-batch_scaling_params" style="display: none;">
-								<ul class="actions fit">
-									<li style="width: 40%; display: flex; align-items: center;">Batch sizes to evaluate
-									</li>
-									</li>
-									<li><input type="text" name="bench-batch_scaling_factors" id="bench-batch_scaling_factors" value=""
-											placeholder="128, 256, ..."></li>
-								</ul>
-							</div>
-
-							<h4>Uncertainty Quantification</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-uq" name="bench-uq"
-									onchange="toggleElementVisible('div-uq_params', this.checked)">
-								<label for="bench-uq">Uncertainty Quantification</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-uq_params" style="display: none;">
-								<ul class="actions fit">
-									<li style="width: 40%; display: flex; align-items: center;">Ensemble size</li>
-									<li><input type="text" name="bench-uq_ensemble_size" id="bench-uq_ensemble_size"
-											value="" placeholder="Number of models"></li>
-								</ul>
-							</div>
-
-							<section style="margin-top: 2rem;">
-								<h3>Misc</h3>
-								<div class="col-6 col-12-xsmall">
-									<input type="text" name="misc-devices" id="misc-devices" value=""
-										placeholder="Devices to train on (e.g. cuda:0, cuda:1, ...), default cpu" />
-								</div>
-								<div class="col-6 col-12-small" style="margin-top: 0.4rem;">
-									<input type="checkbox" id="misc-verbose" name="misc-verbose">
-									<label for="misc-verbose">Verbose output</label>
-								</div>
-								<div class="col-6 col-12-xsmall">
-									<input type="text" name="misc-seed" id="misc-seed" value="42"
-										placeholder="Random seed" />
-								</div>
-
-							</section>
-
-						</section>
-						<hr />
-						<section>
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<div class="inner">
+							<h1>CODES Benchmark</h1>
+							<p>A benchmark for Coupled ODE Surrogates</p>
 							<ul class="actions">
-								<li><input type="button" value="Generate Config" class="primary"
-										onclick="downloadYAML()" /></li>
-								<li><input type="reset" value="Reset" onclick="fullResetForm()" /></li>
+								<li><a href="#one" class="button scrolly">Learn more</a></li>
 							</ul>
-						</section>
+						</div>
+					</section>
 
-					</form>
+				<!-- One -->
+				<section id="one" class="wrapper style3 fade-up">
+					<div class="inner">
+						<h2>About</h2>
+						<p>CODES is a benchmark for Coupled ODE Surrogates. It aims to provide valuable insights into both datasets and surrogate performance.</p>
+					</div>
 				</section>
+
+				<!-- Two -->
+					<section id="two" class="wrapper style2 spotlights">
+						<section>
+							<a href="#" class="image"><img src="images/image.webp" alt="" data-position="center center" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Motivation and Goals</h2>
+									<p>CODES aims to provide valuable insights into both datasets and surrogate performance.</p>
+									<ul class="actions">
+										<li><a href="motivation.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<a href="#" class="image"><img src="images/pic04.jpg" alt="" data-position="top center" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Benchmark</h2>
+									<p>Some text about the benchmark</p>
+									<ul class="actions">
+										<li><a href="benchmark.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<a href="#" class="image"><img src="images/pic02.jpg" alt="" data-position="top center" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Documentation</h2>
+									<p>Some text about the documentation</p>
+									<ul class="actions">
+										<li><a href="documentation.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<a href="#" class="image"><img src="images/pic06.jpg" alt="" data-position="top center" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Config maker</h2>
+									<p>Some text about the config maker</p>
+									<ul class="actions">
+										<li><a href="documentation.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<a href="#" class="image"><img src="images/pic03.jpg" alt="" data-position="25% 25%" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Hopefully the link to the publication</h2>
+									<p>See our Neurips publication for more information</p>
+									<ul class="actions">
+										<li><a href="#" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+
+				
+
+				<!-- Three -->
+				<!-- <section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							
+						</div>
+					</section> -->
 
 			</div>
 
-		</section>
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-		<script src="assets/js/form_utilities.js"></script>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
-	</div>
-
-	<!-- Footer -->
-	<footer id="footer" class="wrapper alt">
-		<div class="inner">
-			<ul class="menu">
-				<li>&copy; Immanuel Sulzer. All rights reserved.</li>
-				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-			</ul>
-		</div>
-	</footer>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/jquery.scrolly.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
-</body>
-
+	</body>
 </html>
