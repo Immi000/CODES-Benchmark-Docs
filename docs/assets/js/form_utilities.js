@@ -215,10 +215,9 @@ function downloadYAML() {
         devices: getSelectedDevices(),
         seed: Number(document.getElementById("misc-seed").value),
         verbose: document.getElementById("misc-verbose").checked,
-        losses: document.getElementById("bench-losses").checked,
-        dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
-        timing: document.getElementById("bench-timing").checked,
-        compute: document.getElementById("bench-compute").checked,
+        batch_size: getBatchSizeList(),
+        epochs: getEpochList(),
+
         interpolation: {
             enabled: document.getElementById("bench-interpolation").checked,
             intervals: getInterpolationIntervals()
@@ -239,9 +238,13 @@ function downloadYAML() {
             enabled: document.getElementById("bench-uq").checked,
             ensemble_size: Number(document.getElementById("bench-uq_ensemble_size").value),
         },
+        
+        losses: document.getElementById("bench-losses").checked,
+        dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
+        timing: document.getElementById("bench-timing").checked,
+        compute: document.getElementById("bench-compute").checked,
         compare: document.getElementById("misc-compare").checked,
-        batch_size: getBatchSizeList(),
-        epochs: getEpochList()
+        
     };
 
     function Format(data) {
