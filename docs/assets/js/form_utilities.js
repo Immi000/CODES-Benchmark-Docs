@@ -216,7 +216,7 @@ function downloadYAML() {
         seed: Number(document.getElementById("misc-seed").value),
         verbose: document.getElementById("misc-verbose").checked,
         losses: document.getElementById("bench-losses").checked,
-        dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
+        gradients: document.getElementById("bench-dyn_acc").checked,
         timing: document.getElementById("bench-timing").checked,
         compute: document.getElementById("bench-compute").checked,
         interpolation: {
