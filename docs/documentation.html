@@ -38,7 +38,7 @@
 		<!-- Main -->
 		<section id="main" class="wrapper">
 			<div class="inner">
-				<h1>Documentation</h1>
+				<h1 class="major">Documentation</h1>
 				<div class="col-6 col-12-medium">
 					<ul class="alt">
 						<li><a href="#setup">Setup</a></li>
@@ -62,7 +62,7 @@
 						set up a configuration YAML
 						file. There is one provided, but it should be configured. For more information, check the <a
 							href="config.html">configuration page</a>.
-						There we also offer an interactive Config-Generator tool with some explanations to help you set
+						There, we also offer an interactive Config-Generator tool with some explanations to help you set
 						up your benchmark.</p>
 					<p>You can also add your own datasets and models to the benchmark to evaluate them against each
 						other or some of our baseline models.
@@ -82,23 +82,77 @@
 						<li>training parameters like number of epochs, batch sizes, GPUs</li>
 						<li><strong>what evaluations to perform</strong> and their required parameters</li>
 					</ul>
-					<p>The config file has the following structure (the order of parameters is not important as long as the nesting is correct):</p>
+					<p>If you don't feel like manually creating or editing your config, check our <a
+							href="config.html">online config generator</a>. You can configure everything and simply
+						download the YAML config file.</p>
+					<p>The config file has the following structure (the order of parameters is not important as long as
+						the nesting is correct):</p>
 					<ul>
+						<h4>Overall training parameters</h4>
 						<li><code>training_id: str</code><br>The name of the benchmark run</li>
 						<li><code>surrogates: list[str]</code><br>The list of surrogates to evaluate. See <a href="">our
-								surrogates <strong>(ADD LINK)</strong></a> for available options and <a href="#">how to add your own
-									model <strong>(ADD LINK)</strong></a>. The name corresponds to the name of the surrogate's class.</li>
+								surrogates <strong>(ADD LINK)</strong></a> for available options and <a href="#">how to
+								add your own
+								model <strong>(ADD LINK)</strong></a>. The name corresponds to the name of the
+							surrogate's class.</li>
+						<li><code>batch_size: int | list[int]</code><br>Specifies the batch size for the surrogates
+							during training. Can either be a single integer if all surrogates share a batch size, or a
+							list of batch sizes as long as the list of surrogates.
+						</li>
+						<li><code>epochs: int | list[int]</code><br>The number of epochs to train the surrogates for.
+							Can be
+							a single integer if all surrogates share the same number of epochs, or a list of epochs as
+							long
+							as the list of surrogates.</li>
 						<li><code>dataset:</code></li>
 						<ul>
-							<li><code>name: str</code><br>The dataset to train and evaluate on. See <a href="#">our datasets<strong>(ADD LINK)</strong></a>
-								for available options and <a href="#">how to add your own dataset<strong>(ADD LINK)</strong></a>.</li>
+							<li><code>name: str</code><br>The dataset to train and evaluate on. See <a href="#">our
+									datasets<strong>(ADD LINK)</strong></a>
+								for available options and <a href="#">how to add your own dataset<strong>(ADD
+										LINK)</strong></a>.</li>
+							<li><code>log10_transform: bool</code><br>Whether to take the logarithm of the dataset. This
+								may be useful for datasets where the values span many orders of magnitude.</li>
+							<li><code>normalise: str</code><br>How to normalise the data. Options are</li>
+							<ul>
+								<li><code>"minmax"</code> - applies <a
+										href="https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)">min-max
+										normalization</a> to the data to rescale it to [-1, 1].</li>
+								<li><code>"standardise"</code> - applies <a
+										href="https://en.wikipedia.org/wiki/Feature_scaling#Standardization_(Z-score_Normalization)">standardization</a>
+									to the data to have a mean of 0 and a standard deviation of 1.</li>
+								<li><code>"disable"</code> - no normalization is applied.</li>
+								<p>If you want to apply another form of normalization to the data, you may have to <a
+										href="#">add your own dataset<strong>(ADD
+											LINK)</strong></a> and normalise the data beforehand.</p>
+							</ul>
 						</ul>
+						<li><code>seed: int</code><br>The random seed used to initialize the random seeds for <a
+								href="https://docs.python.org/3/library/random.html#bookkeeping-functions">Python</a>,
+							<a href="https://pytorch.org/docs/stable/notes/randomness.html">PyTorch</a> and <a
+								href="https://numpy.org/doc/stable/reference/random/index.html">NumPy</a>. In some
+							benchmarks, the seed is altered deterministically to train for example an Ensemble (where
+							each model requires a different seed).
+						</li>
+						<li><code>losses: bool</code><br>Whether to record the losses in the output files</li>
+						<li><code>verbose: bool</code><br>Whether to output additional information about the current
+							processing step to the CLI</li>
+						<p></p>
+						<h4>Benchmark parameters</h4>
+						<li><code>accuracy: bool</code><br></li>
+						<li><code>dynamic_accuracy: bool</code><br></li>
+						<li><code>timing: bool</code><br></li>
+						<li><code>compute: bool</code><br></li>
 					</ul>
+					<p>Once the configuration is complete, the configuration YAML file needs to be placed into the root
+						directory of the CODES-Benchmark repository. The </p>
 				</section>
 
 				<section id="run">
 					<h2>Run the benchmark</h2>
-					<p>Some text about running the benchmark</p>
+					<p>The first step in running the benchmark is to train all the different models specified in the
+						configuration. As this step usually takes a lot longer than the actual benchmarking, it is
+						executed as a separate step.</p>
+						<p>To start the training, run the <code>train.py</code> file. If your </p>
 				</section>
 				<section id="add_dset">
 					<h2>Add your own dataset</h2>
