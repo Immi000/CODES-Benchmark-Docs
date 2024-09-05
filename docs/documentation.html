@@ -47,7 +47,7 @@
 						<li><a href="#run">Run the benchmark</a></li>
 						<li><a href="#add_dset">Add your own dataset</a></li>
 						<li><a href="#add_model">Add your own model</a></li>
-						<li><a href="#docu">Config Maker</a></li>
+						<li><a href="#docu">Code Documentation</a></li>
 					</ul>
 				</div>
 
@@ -169,8 +169,80 @@
 
 				<section id="add_dset">
 					<h2>Add your own dataset</h2>
-					<p>Some text about adding your own dataset</p>
+					<p>Adding your own data to the CODES repository is fairly straight forward, as we provide an already
+						implemented function <code>create_dataset</code> that seamlessly integrates your data into the
+						benchmark. You can simply pass your raw (numpy) data to the function along with some additional
+						data and it will create the appropriate file(s) in the <code>data</code> directroy of the
+						repository. However, usually you don't directly need to access the stored data anyways, as the
+						benchmark handles the data automatically based on the dataset name provided in the
+						configuration.</p>
+					<p>You can import the <code>create_dataset</code> function from the <code>data/data_utils.py</code>
+						file. It has the following signature:</p>
+					<ul>
+						<li><strong><code>create_dataset</code></strong></li>
+						<ul>
+							<li><code>name: str</code> The name of the dataset and also the directory in which it will
+								be
+								stored, e.g. a dataset called "MyDataset" will be stored in the
+								<code>data/mydataset</code> directory.
+							</li>
+							<li><code>train_data: np.ndarray</code> The array of training data. It should be of the
+								shape (n_trajectories, n_timesteps, n_species).</li>
+							<li><code>test_data: np.ndarray | None</code> The array of test data, optional. Should
+								follow the same shape convention as the training data.
+							<li><code>val_data: np.ndarray | None</code> The array of validation data, optional. Should
+								follow the same shape convention as the training data.
+							<li><code>split: tuple[float, float, float] | None</code> If test and validation data are
+								not provided, the training data array can be split into train, test and validation based
+								on the split tuple provided. For example, a value of
+								<code>split=(0.8, 0.15, 0.05)</code> will split the data into 80% training, 15% test and
+								5% validation data.
+							</li>
+							<li><code>timesteps: np.ndarray | None</code> The timesteps array for the data, optional.
+								Can be used if required in the surrogates or to set the time axis in the plots. If not
+								provided, a [0, 1] array will be inferred from the shape of the data.</li>
+							<li><code>labels: list[str] | None</code> The species labels for the evaluation plots.</li>
+						</ul>
+					</ul>
 				</section>
+
+				Supposing you already have a dataset in the form of train, test and validation numpy arrays, you can simply call the <code>create_dataset</code> function like this:
+				<pre><code class="language-py">import numpy as np
+from data.data_utils import create_dataset
+
+# load your data
+train_data = np.load("path/to/train_data.npy")
+test_data = np.load("path/to/test_data.npy")
+val_data = np.load("path/to/val_data.npy")
+timesteps = np.load("path/to/timesteps.npy")
+labels = ["species1", "species2", "species3"]
+
+# create the dataset
+create_dataset(
+	name="MyDataset",
+	train_data=train_data,
+	test_data=test_data,
+	val_data=val_data,
+	timesteps=timesteps,
+	labels=labels
+)</code></pre>
+
+Alternatively, if you only have a single dataset array and want to split it into train, test and validation data, you can do this:
+<pre><code class="language-py">import numpy as np
+from data.data_utils import create_dataset
+
+# load your data
+data = np.load("path/to/data.npy")
+timesteps = np.load("path/to/timesteps.npy")
+
+# create the dataset
+create_dataset(
+	name="MyDataset",
+	train_data=data,
+	split=(0.8, 0.15, 0.05)
+	timesteps=timesteps
+	labels=["species1", "species2", "species3"]
+)</code></pre>
 
 				<section id="add_model">
 					<h2>Add your own model</h2>
