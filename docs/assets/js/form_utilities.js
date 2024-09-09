@@ -207,6 +207,7 @@ function downloadYAML() {
     const config = {
         training_id: String(trainingId),
         surrogates: getSurrogateListString(),
+        use_optimal_params: document.getElementById("misc-use_optimal_params").checked,
         dataset: {
             name: String(datasetName),
             log10_transform: document.getElementById("data-log10").checked,
@@ -232,7 +233,7 @@ function downloadYAML() {
         },
         batch_scaling: {
             enabled: document.getElementById("bench-batch_scaling").checked,
-            factors: getBatchScalingFactors()
+            sizes: getBatchScalingFactors()
         },
         uncertainty: {
             enabled: document.getElementById("bench-uq").checked,
@@ -240,7 +241,7 @@ function downloadYAML() {
         },
         
         losses: document.getElementById("bench-losses").checked,
-        dynamic_accuracy: document.getElementById("bench-dyn_acc").checked,
+        gradients: document.getElementById("bench-dyn_acc").checked,
         timing: document.getElementById("bench-timing").checked,
         compute: document.getElementById("bench-compute").checked,
         compare: document.getElementById("misc-compare").checked,
