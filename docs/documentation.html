@@ -25,7 +25,7 @@
 		<nav>
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li><a href="motivation.html">Motivation</a></li>
+				<li><a href="motivation.html">Overview</a></li>
 				<li><a href="benchmark.html">Benchmark</a></li>
 				<li><a href="documentation.html" class="active">Documentation</a></li>
 				<li><a href="config.html">Config Maker</a></li>
@@ -43,8 +43,8 @@
 				<div class="col-6 col-12-medium">
 					<ul class="alt">
 						<li><a href="#setup">Setup</a></li>
-						<li><a href="#config">Configuring the benchmark</a></li>
 						<li><a href="#run">Run the benchmark</a></li>
+						<li><a href="#config">Configuring the benchmark</a></li>
 						<li><a href="#add_dset">Add your own dataset</a></li>
 						<li><a href="#add_model">Add your own model</a></li>
 						<li><a href="#docu">Code Documentation</a></li>
@@ -53,8 +53,8 @@
 
 				<section id="setup">
 					<h2>Setup</h2>
-					<p>First, clone the <a href="#">GitHub Repo</a> with
-						<code>git clone ssh://git@github.com/link/to/repo</code>.
+					<p>First, clone the <a href="#">GitHub Repository</a> with
+						<code>git clone ssh://git@github.com/robin-janssen/CODES-Benchmark</code>.
 					</p>
 					<p>Optionally, you can set up a <a href="https://docs.python.org/3/library/venv.html">virtual
 							environment</a> (recommended).</p>
@@ -68,6 +68,23 @@
 					<p>You can also add your own datasets and models to the benchmark to evaluate them against each
 						other or some of our baseline models.
 						For more information on how to do this, please refer to the <a href="#three">documentation</a>.
+					</p>
+				</section>
+
+				<section id="run">
+					<h2>Run the benchmark</h2>
+					<p>The first step in running the benchmark is to train all the different models specified in the
+						configuration. As this step usually takes a lot longer than the actual benchmarking, it is
+						executed as a separate step.</p>
+					<p>To start the training, run the <code>run_training.py</code> file. to pass in a config file that
+						has a
+						filename different from the default <code>config.yaml</code>, use the <code>--config</code>
+						argument when executing from the command line like this:
+						<code>/path/to/python3 run_training.py --config MyConfig.yaml</code>.
+					</p>
+					<p>After the training is complete, the benchmark can be run. To start the benchmark, run the
+						<code>run_benchmark.py</code> file. Remember to pass in the same config file as you used for the
+						training.
 					</p>
 				</section>
 
@@ -91,10 +108,10 @@
 					<ul>
 						<h4>Overall training parameters</h4>
 						<li><code>training_id: str</code><br>The name of the benchmark run</li>
-						<li><code>surrogates: list[str]</code><br>The list of surrogates to evaluate. See <a href="">our
-								surrogates <strong>(ADD LINK)</strong></a> for available options and <a href="#">how to
-								add your own
-								model <strong>(ADD LINK)</strong></a>. The name corresponds to the name of the
+						<li><code>surrogates: list[str]</code><br>The list of surrogates to evaluate. See <a
+								href="benchmark.html#surrogates">our
+								surrogates</a> for available options and <a href="#add_model">how to
+								add your own model</a>. The name corresponds to the name of the
 							surrogate's class.</li>
 						<li><code>batch_size: int | list[int]</code><br>Specifies the batch size for the surrogates
 							during training. Can either be a single integer if all surrogates share a batch size, or a
@@ -107,10 +124,10 @@
 							as the list of surrogates.</li>
 						<li><code>dataset:</code></li>
 						<ul>
-							<li><code>name: str</code><br>The dataset to train and evaluate on. See <a href="#">our
-									datasets<strong>(ADD LINK)</strong></a>
-								for available options and <a href="#">how to add your own dataset<strong>(ADD
-										LINK)</strong></a>.</li>
+							<li><code>name: str</code><br>The dataset to train and evaluate on. See <a
+									href="benchmark.html#datasets">our
+									datasets</a>
+								for available options and <a href="#add_dset">how to add your own dataset</a>.</li>
 							<li><code>log10_transform: bool</code><br>Whether to take the logarithm of the dataset. This
 								may be useful for datasets where the values span many orders of magnitude.</li>
 							<li><code>normalise: str</code><br>How to normalise the data. Options are</li>
@@ -123,8 +140,7 @@
 									to the data to have a mean of 0 and a standard deviation of 1.</li>
 								<li><code>"disable"</code> - no normalization is applied.</li>
 								<p>If you want to apply another form of normalization to the data, you may have to <a
-										href="#">add your own dataset<strong>(ADD
-											LINK)</strong></a> and normalise the data beforehand.</p>
+										href="#add_dset">add your own dataset</a> and normalise the data beforehand.</p>
 							</ul>
 						</ul>
 						<li><code>seed: int</code><br>The random seed used to initialize the random seeds for <a
@@ -147,23 +163,8 @@
 					<p>Once the configuration is complete, the configuration YAML file needs to be placed into the root
 						directory of the CODES-Benchmark repository. The default filename the training and benchmark
 						look for is <code>config.yaml</code>, however, you can specify any filename with the
-						<code>--config</code> argument of the <code>train.py</code> and <code>benchmark.py</code> files.
-					</p>
-				</section>
-
-				<section id="run">
-					<h2>Run the benchmark</h2>
-					<p>The first step in running the benchmark is to train all the different models specified in the
-						configuration. As this step usually takes a lot longer than the actual benchmarking, it is
-						executed as a separate step.</p>
-					<p>To start the training, run the <code>train.py</code> file. to pass in a config file that has a
-						filename different from the default <code>config.yaml</code>, use the <code>--config</code>
-						argument when executing from the command line like this:
-						<code>/path/to/python3 train.py --config MyConfig.yaml</code>.
-					</p>
-					<p>After the training is complete, the benchmark can be run. To start the benchmark, run the
-						<code>benchmark.py</code> file. Remember to pass in the same config file as you used for the
-						training.
+						<code>--config</code> argument of the <code>run_training.py</code> and
+						<code>run_benchmark.py</code> files.
 					</p>
 				</section>
 
@@ -206,7 +207,8 @@
 					</ul>
 				</section>
 
-				Supposing you already have a dataset in the form of train, test and validation numpy arrays, you can simply call the <code>create_dataset</code> function like this:
+				Supposing you already have a dataset in the form of train, test and validation numpy arrays, you can
+				simply call the <code>create_dataset</code> function like this:
 				<pre><code class="language-py">import numpy as np
 from data.data_utils import create_dataset
 
@@ -227,8 +229,9 @@ create_dataset(
 	labels=labels
 )</code></pre>
 
-Alternatively, if you only have a single dataset array and want to split it into train, test and validation data, you can do this:
-<pre><code class="language-py">import numpy as np
+				Alternatively, if you only have a single dataset array and want to split it into train, test and
+				validation data, you can do this:
+				<pre><code class="language-py">import numpy as np
 from data.data_utils import create_dataset
 
 # load your data
@@ -248,7 +251,9 @@ create_dataset(
 					<h2>Add your own model</h2>
 					<p>To be able to compare your own models to each other or to some of the baseline models provided by
 						us, you need to add your own surrogate implementation to the repository. The
-						<a href="#">AbstractSurrogateModel <strong>(ADD LINK)</strong></a> class offers a blueprint as
+						<a
+							href="https://github.com/robin-janssen/CODES-Benchmark/blob/main/surrogates/surrogates.py">AbstractSurrogateModel</a>
+						class offers a blueprint as
 						well as some basic functionality like saving and loading models. Your own model needs to be
 						implemented or wrapped in a class that inherits from the AbstractSurrogateModel class.
 					</p>
@@ -264,8 +269,9 @@ create_dataset(
 					<ul>
 						<li>
 							<h3><code>__init__</code></h3>
-							<p>The initialization method. In this method you only need to instantiate your model to the
-								<code>model</code>-attribute of your surrogate and handle the configuration.
+							<p>The initialization method. In this method you can instantiate any objects you need during
+								training and set attributes required later. The method should also call the super
+								classes constructor and set the model configuration.</p>
 							</p>
 							<h4>Arguments:</h4>
 							<ul>
@@ -384,9 +390,9 @@ create_dataset(
 						<code>my_surrogate_config.py</code>, where we can define the hyperparameters of our surrogate.
 						If you plan to use several datasets with your surrogate, you can also define a set of
 						hyperparameters per dataset, as the optimal parmeters might vary between datasets. Check the <a
-							href="#">dataset section <strong>(ADD LINK)</strong></a> on how to do this.
+							href="benchmark.html#datasets">dataset section</a> on how to do this.
 					</p>
-					<p>For this demonstration, we will use the <a href="#">OSU2008 <strong>(ADD LINK)</strong></a>
+					<p>For this demonstration, we will use the <a href="benchmark.html#datasets">OSU2008</a>
 						dataset. Our demonstration surrogate will simply take the initial abundances and make a
 						prediction based on those.</p>
 					<p>Before implementing the surrogate itself, we will define its configuration dataclass. For this,
@@ -428,8 +434,9 @@ class MyDataset(Dataset):
 	def __len__(self):
 		return self.length</code></pre>
 					<p>Now we implement the surrogate itself. It is important that the custom surrogate
-						class is derived from the <code>AbstractSurrogateModel</code><strong>(ADD LINK)</strong> class
-						and adheres to its method signatures in order to be compatible with the benchmark.</p>
+						class is derived from the <a
+							href="https://github.com/robin-janssen/CODES-Benchmark/blob/main/surrogates/surrogates.py"><code>AbstractSurrogateModel</code></a>
+						class and adheres to its method signatures in order to be compatible with the benchmark.</p>
 					<p>Let's begin by implementing the <code>__init__</code> method. All we need to do here is
 						initialize our neural network and call the super classes constructor, as well as initializing
 						our model config so its parameters are available inside our surrogate class.</p>
