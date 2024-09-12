@@ -23,6 +23,7 @@
 - [ ] **Check the memory benchmarking**
 - [x] **Docstrings completion.**
 - [x] **Make a clean requirements.txt**
+- [ ] Make a develop branch
 - [ ] Check the documentation and utility functions for compatibility with the refactoring (src/codes)
 - [ ] Make more docs: Contribution guidelines, pull requests, etc.
 - [ ] Avoid having to put self.setup_progress_bar in the fit function manually.
