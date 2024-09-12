@@ -170,20 +170,27 @@
 
 				<section id="add_dset">
 					<h2>Add your own dataset</h2>
-					<p>Adding your own data to the CODES repository is fairly straight forward using the  <code>create_dataset</code> function. 
+					<p>Adding your own data to the CODES repository is fairly straight forward using the
+						<code>create_dataset</code> function.
 						You can simply pass your raw (numpy) data to the function along with some additional
-						optional data and it will create the appropriate file(s) in the <code>data</code> directory of the
-						repository. After this, you will not need to interact with the data again, as the 
+						optional data and it will create the appropriate file(s) in the <code>data</code> directory of
+						the
+						repository. After this, you will not need to interact with the data again, as the
 						benchmark handles the data automatically based on the dataset name provided in the
 						configuration.</p>
 
-					<p>A note on dataset availability: The benchmark can be run on local data as soon as you created the dataset with <code>create_dataset</code>
-						(i.e., the data can be completely offline/local). 
+					<p>A note on dataset availability: The benchmark can be run on local data as soon as you created the
+						dataset with <code>create_dataset</code>
+						(i.e., the data can be completely offline/local).
 						The actual data.hdf5 file in your new dataset directory is ignored by git and
-						should not be added to the repository. If you want to make your dataset available to others (which we highly encourage), 
-						you can upload it to Zenodo and provide the download link in <code>data/data_sources.yaml</code>.
-						If you choose to do this (which we highly encourage), you can push the created dataset directory to the
-						repository, as it will later be used to store visualisations of the data or a <code>surrogate_config.py</code>
+						should not be added to the repository. If you want to make your dataset available to others
+						(which we highly encourage),
+						you can upload it to Zenodo and provide the download link in
+						<code>data/data_sources.yaml</code>.
+						If you choose to do this (which we highly encourage), you can push the created dataset directory
+						to the
+						repository, as it will later be used to store visualisations of the data or a
+						<code>surrogate_config.py</code>
 						that contains the hyperparameters for the surrogate models.</p>
 
 					<p>You can import the <code>create_dataset</code> function from the <code>data/data_utils.py</code>
@@ -256,8 +263,10 @@ create_dataset(
 )</code></pre>
 
 				<p>After calling the <code>create_dataset</code> function, the dataset will be stored in the
-					<code>data/mydataset</code> directory of the repository. The benchmark will automatically load the
-					data from there based on the dataset name provided in the configuration.</p>
+					<code>data/mydataset</code> directory of the repository (the dataset name is not case sensitive, it
+					will always be stored in lowercase). The benchmark will automatically load the
+					data from there based on the dataset name provided in the configuration.
+				</p>
 
 				<section id="add_model">
 					<h2>Add your own model</h2>
