@@ -242,8 +242,8 @@ timesteps = np.load("path/to/timesteps.npy")
 create_dataset(
 	name="MyDataset",
 	train_data=data,
-	split=(0.8, 0.15, 0.05)
-	timesteps=timesteps
+	split=(0.8, 0.15, 0.05),
+	timesteps=timesteps,
 	labels=["species1", "species2", "species3"]
 )</code></pre>
 
