@@ -57,6 +57,7 @@
 - [ ] Dataset Visualizations - also include how the distribution changes over time (for iterative preds)
 - [ ] Determine optimal model parameters for the baseline models per dataset
 - [ ] Integrate Torch Compile for potentially better performance
+- [ ] Add Robertson system to datasets as a toy problem
 
 ## Potential Models
 - [ ] Multiple DeepONets
