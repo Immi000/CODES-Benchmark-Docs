@@ -23,6 +23,8 @@
 - [ ] **Check the memory benchmarking**
 - [x] **Docstrings completion.**
 - [x] **Make a clean requirements.txt**
+- [ ] Use poetry for versioning
+- [ ] Add alive progress bars instead of tqdm
 - [ ] Make a develop branch
 - [ ] Add a .lock file to ensure full reproducibility of all dependencies
 - [ ] Check the documentation and utility functions for compatibility with the refactoring (src/codes)
