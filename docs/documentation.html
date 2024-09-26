@@ -173,7 +173,7 @@
 					<p>Adding your own data to the CODES repository is fairly straight forward using the
 						<code>create_dataset</code> function.
 						You can simply pass your raw (numpy) data to the function along with some additional
-						optional data and it will create the appropriate file(s) in the <code>data</code> directory of
+						optional data and it will create the appropriate file(s) in the <code>datasets</code> directory of
 						the
 						repository. After this, you will not need to interact with the data again, as the
 						benchmark handles the data automatically based on the dataset name provided in the
@@ -186,21 +186,21 @@
 						should not be added to the repository. If you want to make your dataset available to others
 						(which we highly encourage),
 						you can upload it to Zenodo and provide the download link in
-						<code>data/data_sources.yaml</code>.
+						<code>datasets/data_sources.yaml</code>.
 						If you choose to do this (which we highly encourage), you can push the created dataset directory
 						to the
 						repository, as it will later be used to store visualisations of the data or a
 						<code>surrogate_config.py</code>
 						that contains the hyperparameters for the surrogate models.</p>
 
-					<p>You can import the <code>create_dataset</code> function from the <code>data/data_utils.py</code>
-						file. It has the following signature:</p>
+					<p>You can import the <code>create_dataset</code> function from the <code>codes</code>
+						package. It has the following signature:</p>
 					<ul>
 						<li><strong><code>create_dataset</code></strong></li>
 						<ul>
 							<li><code>name: str</code> The name of the dataset and also the directory in which it will
 								be stored, e.g. a dataset called "MyDataset" will be stored in the
-								<code>data/mydataset</code> directory.
+								<code>datasets/mydataset</code> directory.
 							</li>
 							<li><code>train_data: np.ndarray</code> The array of training data. It should be of the
 								shape (n_trajectories, n_timesteps, n_species).</li>
@@ -263,7 +263,7 @@ create_dataset(
 )</code></pre>
 
 				<p>After calling the <code>create_dataset</code> function, the dataset will be stored in the
-					<code>data/mydataset</code> directory of the repository (the dataset name is not case sensitive, it
+					<code>datasets/mydataset</code> directory of the repository (the dataset name is not case sensitive, it
 					will always be stored in lowercase). The benchmark will automatically load the
 					data from there based on the dataset name provided in the configuration.
 				</p>
