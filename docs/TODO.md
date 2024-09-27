@@ -23,13 +23,14 @@
 - [ ] **Check the memory benchmarking**
 - [x] **Docstrings completion.**
 - [x] **Make a clean requirements.txt**
-- [ ] Use poetry for versioning
+- [x] Use poetry for packages
 - [ ] Add alive progress bars instead of tqdm
-- [ ] Make a develop branch
-- [ ] Add a .lock file to ensure full reproducibility of all dependencies
+- [x] Make a develop branch
+- [x] Add a .lock file to ensure full reproducibility of all dependencies
 - [ ] Check the documentation and utility functions for compatibility with the refactoring (src/codes)
 - [ ] Make more docs: Contribution guidelines, pull requests, etc.
 - [ ] Avoid having to put self.setup_progress_bar in the fit function manually.
+- [ ] Add mps support for LatentPoly and LatentNeuralODE (use float32 instead of float64).
 - [ ] **Save Plots as SVG for immaculate quality**
 - [ ] **Do a fresh test install of the repo and verify everything is running**
 - [ ] **Check/update the config maker**
