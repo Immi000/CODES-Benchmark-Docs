@@ -5,11 +5,18 @@
     - [x] Also upload other datasets and create download function
 - [x] Choose a code licence for the code - MIT?
 - [x] Reach out to Lorenzo regarding the dataset
-- [ ] **Make a ruleset for the main branch**
+- [x] **Make a ruleset for the main branch**
 - [ ] Optuna and final run for all datasets.
-- [ ] Setup repository: Copy over actions and other settings from the SSC Cookiecutter Template
-- [ ] **Add links in the documentation to respective other sections**
+- [x] Setup repository: Copy over actions and other settings from the SSC Cookiecutter Template
 - [x] Rename main scripts on the website (run_benchmark.py, run_training.py)
+
+## Docs
+
+- [ ] Check the documentation and utility functions for compatibility with the refactoring (src/codes)
+- [ ] Make more docs: Contribution guidelines, pull requests, etc.
+- [ ] **Add links in the documentation to respective other sections**
+- [ ] Update install instructions to poetry
+- [ ] Improve docstrings: Add more detailed descriptions where required
 
 ## Refactor
 - [x] Remove the # model.n_timesteps = 100 lines in bench_fcts once new models are trained.
@@ -27,8 +34,6 @@
 - [ ] Add alive progress bars instead of tqdm
 - [x] Make a develop branch
 - [x] Add a .lock file to ensure full reproducibility of all dependencies
-- [ ] Check the documentation and utility functions for compatibility with the refactoring (src/codes)
-- [ ] Make more docs: Contribution guidelines, pull requests, etc.
 - [ ] Avoid having to put self.setup_progress_bar in the fit function manually.
 - [ ] Add mps support for LatentPoly and LatentNeuralODE (use float32 instead of float64).
 - [ ] **Save Plots as SVG for immaculate quality**
