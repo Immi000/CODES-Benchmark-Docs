@@ -1,12 +1,13 @@
 # Todos for the project
 
+- [ ] Optuna and final run for all datasets.
+- [ ] Think about where to present the baseline benchmark results. Another page on the custom docs HTML page?
 - [x] **Write NeurIPS submission**
 - [x] Read into DataHosting on HeiDATA -> use Zenodo for now
     - [x] Also upload other datasets and create download function
 - [x] Choose a code licence for the code - MIT?
 - [x] Reach out to Lorenzo regarding the dataset
 - [x] **Make a ruleset for the main branch**
-- [ ] Optuna and final run for all datasets.
 - [x] Setup repository: Copy over actions and other settings from the SSC Cookiecutter Template
 - [x] Rename main scripts on the website (run_benchmark.py, run_training.py)
 
@@ -55,6 +56,7 @@
 - [x] Calculate and add error quantities per surrogate to the individal (and comparative) outputs.
 - [x] Add user prompt on whether to use task list or overwrite it.
 - [x] Add additional baseline datasets -> implement dynamic datasets
+- [ ] Add a model export mechanism
 - [ ] Add support for flexible timesteps: The number of timesteps and their intervals should be unique to each sample.
 - [ ] Support a timesteps array for each dataset
 - [ ] Time estimation using training duration of the main models an effective number of models to train.
