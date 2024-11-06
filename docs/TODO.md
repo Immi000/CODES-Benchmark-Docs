@@ -71,6 +71,7 @@
 - [ ] Add Robertson system to datasets as a toy problem
 
 ## Potential Models
+- [ ] Augmented NeuralODE (+ maybe second order NeuralODE)
 - [ ] Multiple DeepONets
 - [ ] NeuralODE without autoencoder
 - [ ] LSTM
