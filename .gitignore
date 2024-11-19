@@ -3,3 +3,4 @@ elements.html
 generic.html
 images/
 .DS_Store
+.firebase/hosting.*

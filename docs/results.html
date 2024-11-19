@@ -19,33 +19,43 @@
 
 <body class="is-preload">
 
-	<!-- Header -->
-	<header id="header" style="display: flex; align-items: center; padding: 10px;">
-		<!-- Image and title -->
-		<a href="index.html" class="logo" style="display: flex; align-items: center; text-decoration: none;">
-			<img src="favicon-96x96.png" alt="CODES Logo" style="width: 50px; height: 50px; margin-right: 10px;">
-			<span style="font-size: 50px; color: #D6CDEA;">CODES</span>
-		</a>
-		<!-- Navigation -->
-		<nav>
-			<ul style="list-style-type: none; display: flex; gap: 20px; margin: 0;">
-				<li><a href="index.html">Overview</a></li>
-				<li><a href="benchmark.html">Benchmark</a></li>
-				<li><a href="results.html" class="active">Results</a></li>
-				<li><a href="documentation.html">Documentation</a></li>
-				<li><a href="config.html">Config Maker</a></li>
-			</ul>
-		</nav>
-		<!-- GitHub and API Docs Icons -->
-		<div class="icons" style="display: flex; gap: 15px; margin-left: 20px;">
-			<a href="https://github.com/robin-janssen/CODES-Benchmark" target="_blank" aria-label="GitHub">
-				<i class="fa-brands fa-github"></i>
-			</a>
-			<a href="https://robin-janssen.github.io/CODES-Benchmark/" target="_blank" aria-label="API Documentation">
-				<i class="fa-solid fa-book"></i>
-			</a>
-		</div>
-	</header>
+<!-- Header -->
+<header id="header" style="display: flex; align-items: center; padding: 10px;">
+    <!-- Image and title -->
+    <a href="index.html" class="logo">
+        <img src="favicon-96x96.png" alt="CODES Logo" style="width: 50px; height: 50px; margin-right: 5px; vertical-align: top;">
+        <span style="font-size: 50px; color: #D6CDEA; line-height: 50px;">CODES</span>
+    </a>
+
+    <!-- Hamburger Menu Icon -->
+    <button id="menu-toggle" aria-label="Toggle navigation">☰</button>
+
+    <!-- Navigation -->
+    <nav id="nav-menu">
+        <ul style="list-style-type: none; display: flex; gap: 10px; margin: 0;">
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="benchmark.html">Benchmark</a></li>
+            <li><a href="results.html" class="active">Results</a></li>
+            <li><a href="documentation.html">Docs</a></li>
+            <li><a href="config.html">Config Maker</a></li>
+        </ul>
+    </nav>
+
+    <!-- GitHub and API Docs Icons -->
+    <div class="icons" style="display: flex; gap: 15px; margin-left: 20px;">
+        <a href="https://github.com/robin-janssen/CODES-Benchmark" target="_blank" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://robin-janssen.github.io/CODES-Benchmark/" target="_blank" aria-label="API Documentation">
+            <i class="fa-solid fa-book"></i>
+        </a>
+        <a href="https://arxiv.org/abs/2410.20886" target="_blank" aria-label="Paper">
+            <i class="fa-solid fa-file-alt"></i>
+        </a>
+    </div>
+</header>
+
+
 
 	<!-- Wrapper -->
 	<div id="wrapper">
@@ -109,6 +119,8 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+	<script src="assets/js/menu-toggle.js"></script>
+
 
 </body>
 

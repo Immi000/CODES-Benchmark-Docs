@@ -3365,11 +3365,13 @@ input, select, textarea {
 
 /* Header */
 
+/* Base styles remain unchanged */
 #header {
     display: flex;
     align-items: center;
     background-color: #5e42a6;
     padding: 1.75em 2em;
+    justify-content: space-between;
 }
 
 #header a {
@@ -3415,10 +3417,88 @@ input, select, textarea {
     color: #ffffff;
 }
 
+/* Hamburger menu styles */
+#menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 0.5em;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.3s ease-in-out;
+}
+
+#menu-toggle:hover {
+    color: rgba(255, 255, 255, 0.85);
+}
+
 /* Responsive adjustments */
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 910px) {
     #header {
         padding: 1em 2em;
+        flex-wrap: wrap;
+    }
+
+    #menu-toggle {
+        display: block;
+    }
+
+    #header > nav {
+        display: none;
+        width: 100%;
+        text-align: left;
+        flex-direction: column;
+        background-color: #5e42a6;
+        padding: 1em 0;
+        border-radius: 0.5em;
+    }
+
+    #header > nav.active {
+        display: flex;
+    }
+
+    #header > nav > ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        padding: 0;
+    }
+
+    #header > nav > ul > li {
+        margin: 0;
+    }
+
+    #header > nav > ul > li a {
+        font-size: 1em;
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    #header > nav > ul > li a:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+
+    /* Explicitly hide icons in the header bar */
+    #header > .icons {
+        display: none !important; /* Force hiding with higher specificity */
+    }
+
+    /* Show icons inside the navigation menu only when active */
+    #header > nav.active .icons {
+        display: flex !important; /* Force showing with higher specificity */
+        flex-direction: column;
+        gap: 1em;
+        margin-top: 1em;
+        justify-content: flex-start;
+    }
+
+    #header > nav .icons a {
+        font-size: 1.2em;
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+    }
+
+    #header > nav .icons a:hover {
+        color: rgba(255, 255, 255, 1);
     }
 }
 
@@ -3434,38 +3514,27 @@ input, select, textarea {
         padding: 1em 0;
     }
 
-    #header > nav {
-        border-top: solid 1px rgba(255, 255, 255, 0.15);
-        text-align: inherit;
-    }
-
-    #header > nav > ul {
-        display: block;
-        text-align: left;
-    }
-
     #header > nav > ul > li {
         margin-left: 1.5em;
     }
 }
 
-
-/* Adjust the new icons within the header */
+/* Default: Icons visible in the header bar on large screens */
 #header .icons {
     display: flex;
-    gap: 1.5em; /* Adjust the space between the icons */
-    margin-left: 2em; /* Space between the icons and the navigation */
-	margin-right: 0.5em; /* Space between the icons and the navigation */
+    gap: 1.5em;
+    margin-left: 2em;
+    margin-right: 0.5em;
 }
 
 #header .icons a {
-    color: rgba(255, 255, 255, 0.55); /* Initial color for icons */
-    font-size: 1.5em; /* Adjust icon size as needed */
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.5em;
     transition: color 0.3s ease-in-out;
 }
 
 #header .icons a:hover {
-    color: rgba(255, 255, 255, 0.85); /* Change color on hover */
+    color: rgba(255, 255, 255, 0.85);
 }
 
 
