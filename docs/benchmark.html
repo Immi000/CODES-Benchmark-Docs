@@ -35,8 +35,8 @@
         <ul style="list-style-type: none; display: flex; gap: 10px; margin: 0;">
             <li><a href="index.html">Overview</a></li>
             <li><a href="benchmark.html" class="active">Benchmark</a></li>
-            <li><a href="results.html">Results</a></li>
             <li><a href="documentation.html">Docs</a></li>
+			<li><a href="results.html">Results</a></li>
             <li><a href="config.html">Config Maker</a></li>
         </ul>
     </nav>
@@ -86,9 +86,6 @@
 						</li>
 						<li><a href="#benchmarking">Benchmarking</a><br>
 							Explanations on how the benchmarking process works and how to configure it.
-						</li>
-						<li><a href="#output">Output</a><br>
-							A list of all the output files that are generated during the benchmark.
 						</li>
 					</ul>
 				</div>
@@ -189,7 +186,7 @@
 
 
 				<section id="surrogates">
-					<h2>Surrogate Models (add images of the surrogates here!)</h2>
+					<h2>Surrogate Models</h2>
 
 					<p>The benchmark includes several surrogate models that can be trained and compared. All surrogates
 						are subclasses to the base class <code>AbstractSurrogateModel</code>, which contains common
@@ -204,6 +201,9 @@
 							included as the basic model but seems to perform surprisingly well for some cases. The
 							inputs are the initial conditions and the time where the solution is to be evaluated.
 						</li>
+						<img src="assets/images/surrogates/FullyConnected.png" alt="Accuracy Error Distributions"
+						style="width: 50%; max-width: 800px; margin: 0 auto; display: block;">
+
 						<li>
 							<strong>DeepONet</strong><br>
 							DeepONet consists of two fully connected networks whose outputs are combined using a
@@ -214,18 +214,24 @@
 							output vectors of branch and trunk net into multiple parts. Corresponding parts of the
 							output vectors are then combined using a scalar product.
 						</li>
+						<img src="assets/images/surrogates/DeepONet.png" alt="Accuracy Error Distributions"
+						style="width: 50%; max-width: 800px; margin: 0 auto; display: block;">
 						<li>
 							<strong>Latent NeuralODE</strong><br>
 							Latent NeuralODE combines NeuralODE with an autoencoder. The autoencoder reduces the
 							dimensionality of the dataset before solving the dynamics in the resulting latent space,
 							making it an efficient and powerful surrogate model.
 						</li>
+						<img src="assets/images/surrogates/LatentNeuralODE.png" alt="Accuracy Error Distributions"
+						style="width: 50%; max-width: 800px; margin: 0 auto; display: block;">
 						<li>
 							<strong>Latent Polynomial</strong><br>
 							This model also uses an autoencoder similar to the Latent NeuralODE, but instead of
 							solving differential equations, it fits a polynomial to the trajectories in the latent
 							space. This approach offers a different trade-off between complexity and accuracy.
 						</li>
+						<img src="assets/images/surrogates/LatentPoly.png" alt="Accuracy Error Distributions"
+						style="width: 50%; max-width: 800px; margin: 0 auto; display: block;">
 					</ul>
 				</section>
 
@@ -334,13 +340,13 @@
 						provided in the form of a list of strings, where the strings must match the names of the
 						surrogate classes (e.g. <code>["FullyConnected","DeepONet"]</code>). <br>
 						The <code>epochs</code> and <code>batch_size</code> parameters are used to specify the number of
-						epochs to train the models and the batch size to be used during training. They can either be a
-						single integer or a list of integers, where each integer corresponds to a model. The benchmark
+						epochs to train the models and the batch size to be used during training, hence one value per surrogate is required. They should be provided as a list of integers, where the ordering corresponds to that of the names of the surrogates. The benchmark
 						will train each model for the specified number of epochs and with the specified batch size.
 						<br> The <code>name</code> of the dataset to be used is
 						specified in the
-						<code>dataset</code> section, along with the option to <code>log-transform</code> the data and
-						to specify the <code>normalisation</code> to be used. <br>
+						<code>dataset</code> section, along with the option to <code>log-transform</code> the data, specify how to  
+						<code>normalise</code> it, whether to <code>use_optimal_params</code> that were determined in previous hyperparameter tuning 
+						and which <code>tolerance</code> to use for small values. <br>
 						The <code>device</code> parameter specifies the device(s) to be used for training. They can be
 						specified as a list of strings (e.g. <code>["cuda:0","cuda:1"]</code>), where each string is the
 						name of a device. The devices must be available on the machine and support PyTorch. The
@@ -510,36 +516,9 @@
 
 					<h3 id="#modalities">Modalities</h3>
 
-				</section>
-
-				<section id="output">
-					<h2>Output</h2>
-
-					<p> The benchmark has two kinds of outputs: Metrics and plots. Both are given on a per-surrogate
-						basis and in a comparative way. <br>
-						All metric output is stored in <code>results/training_id/</code>. The individual surrogate
-						metrics are stored in <code>surrogatename_metrics.yaml</code> (e.g.
-						fullyconnected_metrics.yaml), while the comparative parts are stored as <code>metrics.csv</code>
-						and <code>metrics_table.txt</code> (this table is also printed to the CLI at the end of the
-						benchmark). <br>
-						All plots are stored in <code>plots/training_id/</code>, the individual plots for each surrogate
-						in the respective surrogate directory and the comparative plots in the main directory. <br>
-					</p>
-
-					<h3 id="ind_metrics">Individual Metrics</h3>
-
-					<p>The <code>surrogatename_metrics.yaml</code> is the most detailed result file, as it contains
-						every metric that was calculated during the benchmark of the corresponding surrogate. Which
-						metrics are calculated depends on the modalities that are activated in the config. </p>
-
-					<h3 id="comp_metrics">Comparative Metrics</h3>
-
-					<h3 id="ind_plots">Individual Plots</h3>
-
-					<h3 id="comp_plots">Comparative Plots</h3>
+					<p><strong>WIP</strong></p>
 
 				</section>
-
 
 		</section>
 

@@ -35,8 +35,8 @@
         <ul style="list-style-type: none; display: flex; gap: 10px; margin: 0;">
             <li><a href="index.html">Overview</a></li>
             <li><a href="benchmark.html">Benchmark</a></li>
-            <li><a href="results.html" class="active">Results</a></li>
             <li><a href="documentation.html">Docs</a></li>
+			<li><a href="results.html" class="active">Results</a></li>
             <li><a href="config.html">Config Maker</a></li>
         </ul>
     </nav>
@@ -64,8 +64,7 @@
 		<section id="main" class="wrapper">
 			<div class="inner">
 				<h1 class="major">Exemplary Results</h1>
-				<p>This page shows some examplary evaluations performed on the <b>osu2008</b> dataset. <br>
-					The main goal is to show what the benchmark is capable of and what the goals and considerations for different plots are.</p>
+				<p>This page shows some examplary evaluations performed on the <b>osu2008</b> dataset to show the benchmark's capabilities and explain considerations for the different plots.</p>
 
 				<section id="plots">
 					<h2>Plots</h2>
@@ -83,7 +82,131 @@
 
 					<h3 id="comp_plots">Comparative Plots</h3>
 
+					<img src="assets/images/comparative_plots/accuracy_error_distributions.png" alt="Accuracy Error Distributions"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>This smoothed histogram plot serves to compare the distribution of the relative errors of the surrogate models. This can aid in identifying long tails of the distribution or multimodality. 
+						Of note could also be the difference in discrepancy between mean and median error.
+					</p>
+
+					<img src="assets/images/comparative_plots/accuracy_rel_errors_time_models.png" alt="Accuracy Relative Error Time Models"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>This plot compares mean and median relative errors across time to identify common spikes or noteable differences between errors. 
+						In this example, there are some spikes in the second half which are roughly shared between models (although more pronounced for LatentNeuralODE and LatentPoly). 
+						These could be explained by overall more dynamic sections of the trajectories at the corresponding time steps, which can be confirmed by looking at some plots of the trajectories or average gradients across time.
+					</p>
+
+					<img src="assets/images/comparative_plots/generalization_error_comparison.png" alt="Generalization Error Comparison"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>One of the main axes of comparison provided by CODES is the scaling of model errors across different modalities. 
+						This plot allows for insights into how the surrogats handle interpolating and extrapolating in the time domain and how much they are able to learn from sparse data.
+					</p>
+
+					<img src="assets/images/comparative_plots/losses_MAE_main_model.png " alt="Losses MAE Main Model"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>There is a range of loss plots in the benchmark which can help identify problems during training or potential for further improvement in case one of the models has not converged fully.
+						From this plot, it is evident that adding a learning rate scheduler for MultiONet and LatentPoly could be beneficial, as the fluctuations in the loss are quite pronounced.
+						This plot has the additional benefit of showing the loss not over the course of epochs, but as a function of actual training time (i.e., actual compute).
+						This is in many cases more informative as epochs are much faster for some models than others.
+					</p>
+
+					<img src="assets/images/comparative_plots/timing_inference.png" alt="Timing Inference"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>A pretty self-explanatory plot comparing the inference times of all models. 
+						The differences mainly arise from the difference in model size (trainable parameters) and, in the case of LatentNeuralODE from the computional cost of numerical integration.</p>
+
+					<img src="assets/images/comparative_plots/uncertainty_over_time.png" alt="Uncertainty Over Time"
+					style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>The key plot regarding uncertainty quantification. It compares the mean absolute error across time with the 1&sigma; interval of the DeepEnsemble predictions.
+						This plot can give insights into the quality of the uncertainty estimates, showing over or underconfidence of the model. 
+						It should be noted that the 1&sigma; interval is a somewhat arbitrary choice and hence it could be argued that the predicted uncertainty could be arbitrarily rescaled.
+						To gain further insights into the quality of the uncertainty estimates, we can use the following plot as well as the Pearson correlation coefficient between uncertainty and error.
+					</p>
+
+					<img src="assets/images/comparative_plots/uncertainty_error_corr_comparison.png" alt="Uncertainty Error Correlation Comparison"
+						style="width: 50%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						One of two heatmap plots to visualise the correlatory investigations of the benchmark.
+						This plot is related to uncertainty quantification, visualising the correlation between predicted uncertainty and actual prediction error at each point.
+						The white dashed line visualises an ideally calibrated model which would always accurately predict the magnitude of each error. 
+						One clearly visible effect is the overconfidence of FullyConnected, which is evidenced by its skewing above the diagonal. 
+						Note that the colormap is log scale, so much of the observed scattering is rather minor and a large fraction of all counts falls into the pixel in the lower left corner (very small error and uncertainty).
+					</p>
+
+					<img src="assets/images/comparative_plots/gradients_error_corr_comparison.png" alt="Gradient Error Correlation Comparison"
+						style="width: 50%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						This second heatmap plot serves to visualise the correlation between the prediction errors and the gradient of the trajectry at this point.
+						This can show whether a given surrogate architecture struggles with dynamic regions of the data.
+						LatentNeuralODE and LatentPoly make a larger fraction of their errors at points with higher gradients compared to FullyConnected and MultiONet.
+						The colormap is again in logscale.
+					</p>
+
 					<h3 id="ind_plots">Individual Plots</h3>
+
+					<img src="assets/images/individual_plots/accuracy_error_per_quantity.png" alt="Timing Inference"
+						style="width: 60%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						This plot is similar to the smoothed-histogram plot comparing the relative errors of all benchmarked surrogates, but shows the relative errors for each quantity separately for a single surrogate model.
+						This helps identify quantities which the model struggles with or which the model is able to predict very well.
+					</p>
+
+					<img src="assets/images/individual_plots/accuracy_rel_errors_time.png" alt="Timing Inference"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						A detailed view into how the relative errors of the given architecture are distributed across time.
+						This plot displays both mean and median error for the given surrogate architecture as well as the range of different percentiles.
+					</p>
+
+					<img src="assets/images/individual_plots/interpolation_errors_over_time.png" alt="Timing Inference"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						This and the two subsequent plots show how the mean absolute error (MAE) develops across time for different modalities of the benchmark (here: Interpolation).
+						As expected, the errors increase for higher intervals, as there are fewer datapoints to train on and the remaining points may inaccurately represent the trajectories.
+					</p>
+
+					<img src="assets/images/individual_plots/extrapolation_errors_over_time.png" alt="Timing Inference"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						Development of the MAE across time for the extrapolation modality. 
+						This plot in particular serves as a good sanity check for whether the models behave as expected, it clearly shows the error increasing rapidly behind the data cutoff.
+					</p>
+
+					<img src="assets/images/individual_plots/sparse_errors_over_time.png" alt="Timing Inference"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						Development of the MAE across time for the sparse modality. As expected, overall errors increase rather uniformly with increasing sparsity.
+						However, the overall rate of this increase may vary between surrogate architectures as shown in the comparative plot for the different modalities. 
+					</p>
+
+					<img src="assets/images/individual_plots/losses_sparse.png" alt="Timing Inference"
+						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						There are a range of loss plots for the different models that are trained for the different modalities for each surrogate.
+						This plot is one example of these loss plots for the sparse modality, showing the loss trajectory for each trained FullyConnected model in this modality.
+					</p>
+
+					<img src="assets/images/individual_plots/uncertainty_deepensemble_preds.png" alt="Timing Inference"
+						style="width: 60%; max-width: 800px; margin: 0 auto; display: block;">
+
+					<p>
+						To get a feeling for the character of the uncertainty estimates, this plot shows the spread of the DeepEnsemble predictions on one sample in the dataset (i.e., one full set of trajectories).
+						The predictions of all models in the ensemble (here 5) are averaged and the resulting 1&sigma;, 2&sigma; and 3&sigma; intervals are plotted.
+						The spread is is slightly difficult to see as it is rather small, but it is recognisable e.g. for CH2+ or O2+.
+					</p>
 
 					<h3 id="comp_metrics">Comparative Metrics</h3>
 
@@ -124,4 +247,4 @@
 
 </body>
 
-</html>
+</html>accuracy_error_distributions

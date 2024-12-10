@@ -36,8 +36,8 @@
         <ul style="list-style-type: none; display: flex; gap: 10px; margin: 0;">
             <li><a href="index.html">Overview</a></li>
             <li><a href="benchmark.html">Benchmark</a></li>
-            <li><a href="results.html">Results</a></li>
             <li><a href="documentation.html" class="active">Docs</a></li>
+			<li><a href="results.html">Results</a></li>
             <li><a href="config.html">Config Maker</a></li>
         </ul>
     </nav>
@@ -154,8 +154,8 @@
 									href="benchmark.html#datasets">our
 									datasets</a>
 								for available options and <a href="#add_dset">how to add your own dataset</a>.</li>
-							<li><code>log10_transform: bool</code><br>Whether to take the logarithm of the dataset. This
-								may be useful for datasets where the values span many orders of magnitude.</li>
+							<li><code>log10_transform: bool</code><br>Whether to take the logarithm of the dataset. 
+								This is recommended, unless the raw data in the data.hdf5 file is already on a log scale.</li>
 							<li><code>normalise: str</code><br>How to normalise the data. Options are</li>
 							<ul>
 								<li><code>"minmax"</code> - applies <a
@@ -168,6 +168,12 @@
 								<p>If you want to apply another form of normalization to the data, you may have to <a
 										href="#add_dset">add your own dataset</a> and normalise the data beforehand.</p>
 							</ul>
+							<li>
+								<code>use_optimal_params: str</code><br>
+								Whether to use previously determined optimal hyperparamters for this dataset. This only works if these hyperparameters
+								are stored in a corresponding <code>surrogates_config.py</code> 
+								(refer to <a href="benchmark.html#datasets">this section </a> for more details).
+							</li>
 						</ul>
 						<li><code>seed: int</code><br>The random seed used to initialize the random seeds for <a
 								href="https://docs.python.org/3/library/random.html#bookkeeping-functions">Python</a>,
