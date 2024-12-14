@@ -13,7 +13,7 @@ function toggleElementVisible(textFieldId, isChecked) {
 
 function getNextFreeModelID() {
   for (var i = 1; i <= 10; i++) {
-    if (customModelIDs.includes(i) == false) {
+    if (!customModelIDs.includes(i)) {
       return i;
     }
   }
@@ -59,7 +59,6 @@ function fullResetForm() {
     "custom-models-container"
   );
   customModelsContainer.innerHTML = "";
-
   var checkboxes = document.querySelectorAll("input[type='checkbox']");
   for (var i = 0; i < checkboxes.length; i++) {
     checkboxes[i].checked = false;
@@ -77,7 +76,6 @@ function fullResetForm() {
 function validateConfigForm() {
   const requiredFields = ["training_id", "data-dataset", "misc-seed"];
   const requiredFieldLabels = ["Training ID", "Dataset", "Seed"];
-
   for (var i = 0; i < requiredFields.length; i++) {
     var field = document.getElementById(requiredFields[i]);
     if (field.value == "") {
@@ -92,6 +90,7 @@ function validateConfigForm() {
     alert("At least one surrogate model must be selected");
     return false;
   }
+
   for (var i = 0; i < surrogates.length; i++) {
     const batchsize = surrogateParams[surrogates[i]].batchsize;
     const epochs = surrogateParams[surrogates[i]].epochs;
@@ -219,15 +218,13 @@ function downloadYAML() {
     return;
   }
 
-  const trainingId = document.getElementById("training_id").value;
-  const datasetName = document.getElementById("data-dataset").value;
+  const trainingId = `${document.getElementById("training_id").value}`;
+  const datasetName = `${document.getElementById("data-dataset").value}`;
 
   const config = {
     training_id: String(trainingId),
     surrogates: getSurrogateListString(),
-    // Removed from top level, now inside dataset:
-    // use_optimal_params: document.getElementById("misc-use_optimal_params").checked,
-
+    // Removed the old top-level use_optimal_params
     dataset: {
       name: String(datasetName),
       log10_transform: document.getElementById("data-log10").checked,
@@ -239,14 +236,11 @@ function downloadYAML() {
         document.getElementById("data-subset_factor").value
       ),
     },
-
     devices: getSelectedDevices(),
     seed: Number(document.getElementById("misc-seed").value),
     verbose: document.getElementById("misc-verbose").checked,
-
     batch_size: getBatchSizeList(),
     epochs: getEpochList(),
-
     interpolation: {
       enabled: document.getElementById("bench-interpolation").checked,
       intervals: getInterpolationIntervals(),
@@ -269,7 +263,6 @@ function downloadYAML() {
         document.getElementById("bench-uq_ensemble_size").value
       ),
     },
-
     losses: document.getElementById("bench-losses").checked,
     gradients: document.getElementById("bench-dyn_acc").checked,
     timing: document.getElementById("bench-timing").checked,
@@ -292,10 +285,9 @@ function downloadYAML() {
   let schema = jsyaml.DEFAULT_SCHEMA.extend({ implicit: [CustomFormatType] });
 
   function replacer(key, value) {
-    if (
-      Array.isArray(value) &&
-      !value.filter((x) => typeof x !== "number").length
-    ) {
+    // The original logic: If it's an array of pure numbers, format inline.
+    // If you want to also inline arrays of strings, remove the numeric check.
+    if (Array.isArray(value) && !value.some((v) => typeof v !== "number")) {
       return Format(jsyaml.dump(value, { flowLevel: 0 }).trim());
     }
     return value;
