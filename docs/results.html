@@ -82,8 +82,13 @@
 
 					<h3 id="comp_plots">Comparative Plots</h3>
 
+					<p>
+						Below is a selection of the plots that can be created in the benchmark if at least two surrogate architectures were trained.
+						These plots serve to compare characteristics between surrogates.
+					</p>
+
 					<img src="assets/images/comparative_plots/accuracy_error_distributions.png" alt="Accuracy Error Distributions"
-						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
+						style="width: 90%; max-width: 800px; margin: 10px auto; display: block;">
 
 					<p>This smoothed histogram plot serves to compare the distribution of the relative errors of the surrogate models. This can aid in identifying long tails of the distribution or multimodality. 
 						Of note could also be the difference in discrepancy between mean and median error.
@@ -151,7 +156,12 @@
 
 					<h3 id="ind_plots">Individual Plots</h3>
 
-					<img src="assets/images/individual_plots/accuracy_error_per_quantity.png" alt="Timing Inference"
+					<p>
+						Below is a selection of the plots that are created in the benchmark for every surrogate architecture that was trained.
+						They can be used to gain deeper insights into the behaviour of single models/architectures.
+					</p>
+
+					<img src="assets/images/individual_plots/accuracy_error_per_quantity.png" alt="Error per quanitity"
 						style="width: 60%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
@@ -159,7 +169,7 @@
 						This helps identify quantities which the model struggles with or which the model is able to predict very well.
 					</p>
 
-					<img src="assets/images/individual_plots/accuracy_rel_errors_time.png" alt="Timing Inference"
+					<img src="assets/images/individual_plots/accuracy_rel_errors_time.png" alt="Relative Errors Over Time"
 						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
@@ -167,7 +177,7 @@
 						This plot displays both mean and median error for the given surrogate architecture as well as the range of different percentiles.
 					</p>
 
-					<img src="assets/images/individual_plots/interpolation_errors_over_time.png" alt="Timing Inference"
+					<img src="assets/images/individual_plots/interpolation_errors_over_time.png" alt="Interpolation Errors Over Time"
 						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
@@ -175,7 +185,7 @@
 						As expected, the errors increase for higher intervals, as there are fewer datapoints to train on and the remaining points may inaccurately represent the trajectories.
 					</p>
 
-					<img src="assets/images/individual_plots/extrapolation_errors_over_time.png" alt="Timing Inference"
+					<img src="assets/images/individual_plots/extrapolation_errors_over_time.png" alt="Extrapolation Errors Over Time"
 						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
@@ -183,7 +193,7 @@
 						This plot in particular serves as a good sanity check for whether the models behave as expected, it clearly shows the error increasing rapidly behind the data cutoff.
 					</p>
 
-					<img src="assets/images/individual_plots/sparse_errors_over_time.png" alt="Timing Inference"
+					<img src="assets/images/individual_plots/sparse_errors_over_time.png" alt="Sparse Errors Over Time"
 						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
@@ -191,7 +201,7 @@
 						However, the overall rate of this increase may vary between surrogate architectures as shown in the comparative plot for the different modalities. 
 					</p>
 
-					<img src="assets/images/individual_plots/losses_sparse.png" alt="Timing Inference"
+					<img src="assets/images/individual_plots/losses_sparse.png" alt="Sparse Losses"
 						style="width: 90%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
@@ -199,7 +209,7 @@
 						This plot is one example of these loss plots for the sparse modality, showing the loss trajectory for each trained FullyConnected model in this modality.
 					</p>
 
-					<img src="assets/images/individual_plots/uncertainty_deepensemble_preds.png" alt="Timing Inference"
+					<img src="assets/images/individual_plots/uncertainty_deepensemble_preds.png" alt="Uncertainty DeepEnsemble Predictions"
 						style="width: 60%; max-width: 800px; margin: 0 auto; display: block;">
 
 					<p>
