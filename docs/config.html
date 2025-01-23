@@ -67,109 +67,121 @@
 	
 						<!-- Configuration Name -->
 						<section>
-							<h3>Name of Configuration</h3>
-							<p>Provide a unique identifier for this training run (e.g., "my_run123").</p>
-							<div class="col-6 col-12-xsmall">
-								<label for="training_id">Training ID</label>
-								<input type="text" name="training_id" id="training_id" value="" placeholder="Training ID" />
+							<!-- <h3>Name of Configuration</h3> -->
+							<div class="row gtr-uniform">
+								<div class="col-6 col-12-xsmall">
+									<label for="training_id">Training ID</label>
+									<p>Provide a unique identifier for this training run (e.g., "my_run123").</p>
+									<input type="text" name="training_id" id="training_id" value="" placeholder="Training ID" />
+								</div>
 							</div>
 						</section>
 	
 						<!-- Dataset Settings -->
 						<section style="margin-top: 2rem;">
 							<h3>Dataset</h3>
-							<p>Specify which dataset to use, how to transform it, and any additional dataset-related parameters.</p>
-							<div class="col-12">
-								<label for="data-dataset">Dataset name (e.g. 'osu2008' or 'branca24')</label>
-								<input type="text" name="data-dataset" id="data-dataset" value="" placeholder="Dataset name" />
-							</div>
-							<div class="col-6 col-12-small" style="margin-top: 0.5rem;">
-								<input type="checkbox" id="data-log10" name="data-log10">
-								<label for="data-log10">Apply log10 transform to data</label>
-							</div>
-							<div class="col-12" style="margin-top: 0.5rem;">
-								<label for="data-norm">Normalization</label>
-								<select name="data-norm" id="data-norm">
-									<option value="standardise">Standardize</option>
-									<option value="minmax">Min-Max Normalize [-1, 1]</option>
-									<option value="disable">None</option>
-								</select>
-							</div>
-							<div class="col-12" style="margin-top: 1rem;">
-								<input type="checkbox" id="data-use_optimal_params" name="data-use_optimal_params">
-								<label for="data-use_optimal_params">Use optimal model hyperparameters</label>
-							</div>
-							<div class="col-12" style="margin-top: 1rem;">
-								<label for="data-tolerance">Tolerance (e.g. 1e-30)</label>
-								<input type="text" name="data-tolerance" id="data-tolerance" value="1e-30" placeholder="Tolerance" />
-							</div>
-							<div class="col-12" style="margin-top: 1rem;">
-								<label for="data-subset_factor">Subset Factor (e.g. 1, 2, ...)</label>
-								<input type="text" name="data-subset_factor" id="data-subset_factor" value="1" placeholder="Subset factor" />
+							<p>Specify which dataset to use, how to transform it, and additional parameters.</p>
+							<div class="row gtr-uniform">
+								<!-- Left column -->
+								<div class="col-6 col-12-small">
+									<label for="data-dataset">Dataset name (e.g. 'osu2008')</label>
+									<input type="text" name="data-dataset" id="data-dataset" value="" placeholder="Dataset name" />
+	
+									<div style="margin-top: 1rem;">
+										<input type="checkbox" id="data-log10" name="data-log10" checked>
+										<label for="data-log10">Apply log10 transform?</label>
+									</div>
+	
+									<div style="margin-top: 1rem;">
+										<label for="data-tolerance">Tolerance (e.g. 1e-30)</label>
+										<input type="text" name="data-tolerance" id="data-tolerance" value="1e-30" placeholder="Tolerance" />
+									</div>
+								</div>
+	
+								<!-- Right column -->
+								<div class="col-6 col-12-small">
+									<label for="data-norm">Normalization</label>
+									<select name="data-norm" id="data-norm">
+										<option value="standardise">Standardize</option>
+										<option value="minmax">Min-Max Normalize [-1, 1]</option>
+										<option value="disable">None</option>
+									</select>
+	
+									<div style="margin-top: 1rem;">
+										<input type="checkbox" id="data-use_optimal_params" name="data-use_optimal_params">
+										<label for="data-use_optimal_params">Use optimal model hyperparameters</label>
+									</div>
+	
+									<div style="margin-top: 1rem;">
+										<label for="data-subset_factor">Subset Factor (e.g. 1)</label>
+										<input type="text" name="data-subset_factor" id="data-subset_factor" value="1" placeholder="Subset factor" />
+									</div>
+								</div>
 							</div>
 						</section>
 	
 						<!-- Surrogates to Include -->
 						<section style="margin-top: 2rem;">
 							<h3>Surrogates to Include</h3>
-							<p>Select which surrogate models to train, and specify their training parameters (batch size, epochs). Check the boxes to enable a model, and fill in the corresponding parameters if needed.</p>
+							<p>Select surrogates and set their parameters.</p>
+							<div class="row gtr-uniform">
+								<!-- Left column: surrogates checkboxes -->
+								<div class="col-6 col-12-small">
+									<div style="margin-bottom: 1rem;">
+										<input type="checkbox" id="model-fcnn" name="model-fcnn" onclick="toggleElementVisible('div-fcnn_params', this.checked)">
+										<label for="model-fcnn">Fully Connected Neural Network</label>
+										<div id="div-fcnn_params" style="display: none; margin-top:0.5rem;">
+											<label>FCNN Parameters:</label>
+											<ul class="actions fit">
+												<li><input type="text" name="model-fcnn_batchsize" id="model-fcnn_batchsize" value="256" placeholder="Batch size"></li>
+												<li><input type="text" name="model-fcnn_epochs" id="model-fcnn_epochs" value="" placeholder="Number of epochs"></li>
+											</ul>
+										</div>
+									</div>
 	
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-fcnn" name="model-fcnn" onclick="toggleElementVisible('div-fcnn_params', this.checked)">
-								<label for="model-fcnn">Fully Connected Neural Network</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-fcnn_params" style="display: none;">
-								<label>FCNN Parameters:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="model-fcnn_batchsize" id="model-fcnn_batchsize" value="256" placeholder="Batch size"></li>
-									<li><input type="text" name="model-fcnn_epochs" id="model-fcnn_epochs" value="" placeholder="Number of epochs"></li>
-								</ul>
-							</div>
+									<div style="margin-bottom: 1rem;">
+										<input type="checkbox" id="model-latent_node" name="model-latent_node" onclick="toggleElementVisible('div-latent_node_params', this.checked)">
+										<label for="model-latent_node">Latent Neural ODE</label>
+										<div id="div-latent_node_params" style="display: none; margin-top:0.5rem;">
+											<label>Latent NODE Parameters:</label>
+											<ul class="actions fit">
+												<li><input type="text" name="model-latent_node_batchsize" id="model-latent_node_batchsize" value="128" placeholder="Batch size"></li>
+												<li><input type="text" name="model-latent_node_epochs" id="model-latent_node_epochs" value="" placeholder="Number of epochs"></li>
+											</ul>
+										</div>
+									</div>
+									<div id="custom-models-container" style="margin-bottom:1rem;"></div>
+									<div class="actions">
+										<a class="button primary icon solid fa-plus" onclick="addCustomModel()">Add model</a>
+									</div>
+								</div>
 	
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-deeponet" name="model-deeponet" onclick="toggleElementVisible('div-deeponet_params', this.checked)">
-								<label for="model-deeponet">Deep Operator Network</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-deeponet_params" style="display: none;">
-								<label>DeepONet Parameters:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="model-deeponet_batchsize" id="model-deeponet_batchsize" value="256" placeholder="Batch size"></li>
-									<li><input type="text" name="model-deeponet_epochs" id="model-deeponet_epochs" value="" placeholder="Number of epochs"></li>
-								</ul>
-							</div>
+								<!-- Right column: more surrogates and custom models -->
+								<div class="col-6 col-12-small">
+									<div style="margin-bottom: 1rem;">
+										<input type="checkbox" id="model-deeponet" name="model-deeponet" onclick="toggleElementVisible('div-deeponet_params', this.checked)">
+										<label for="model-deeponet">Deep Operator Network</label>
+										<div id="div-deeponet_params" style="display: none; margin-top:0.5rem;">
+											<label>DeepONet Parameters:</label>
+											<ul class="actions fit">
+												<li><input type="text" name="model-deeponet_batchsize" id="model-deeponet_batchsize" value="256" placeholder="Batch size"></li>
+												<li><input type="text" name="model-deeponet_epochs" id="model-deeponet_epochs" value="" placeholder="Number of epochs"></li>
+											</ul>
+										</div>
+									</div>
 	
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-latent_node" name="model-latent_node" onclick="toggleElementVisible('div-latent_node_params', this.checked)">
-								<label for="model-latent_node">Latent Neural ODE</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-latent_node_params" style="display: none;">
-								<label>Latent NODE Parameters:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="model-latent_node_batchsize" id="model-latent_node_batchsize" value="128" placeholder="Batch size"></li>
-									<li><input type="text" name="model-latent_node_epochs" id="model-latent_node_epochs" value="" placeholder="Number of epochs"></li>
-								</ul>
-							</div>
-	
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="model-latent_poly" name="model-latent_poly" onclick="toggleElementVisible('div-latent_poly_params', this.checked)">
-								<label for="model-latent_poly">Latent Polynomial Network</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-latent_poly_params" style="display: none;">
-								<label>Latent Poly Parameters:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="model-latent_poly_batchsize" id="model-latent_poly_batchsize" value="128" placeholder="Batch size"></li>
-									<li><input type="text" name="model-latent_poly_epochs" id="model-latent_poly_epochs" value="" placeholder="Number of epochs"></li>
-								</ul>
-							</div>
-	
-							<div id="custom-models-container"></div>
-							<div class="actions" style="margin-top: 1rem;">
-								<a class="button primary icon solid fa-plus" onclick="addCustomModel()">Add model</a>
-							</div>
-	
-							<div class="col-6 col-12-small" style="margin-top: 1rem;">
-								<input type="checkbox" id="misc-compare" name="misc-compare">
-								<label for="misc-compare">Compare models with each other</label>
+									<div style="margin-bottom: 1rem;">
+										<input type="checkbox" id="model-latent_poly" name="model-latent_poly" onclick="toggleElementVisible('div-latent_poly_params', this.checked)">
+										<label for="model-latent_poly">Latent Polynomial Network</label>
+										<div id="div-latent_poly_params" style="display: none; margin-top:0.5rem;">
+											<label>Latent Poly Parameters:</label>
+											<ul class="actions fit">
+												<li><input type="text" name="model-latent_poly_batchsize" id="model-latent_poly_batchsize" value="128" placeholder="Batch size"></li>
+												<li><input type="text" name="model-latent_poly_epochs" id="model-latent_poly_epochs" value="" placeholder="Number of epochs"></li>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 						</section>
 	
@@ -177,126 +189,146 @@
 						<section style="margin-top: 2rem;">
 							<h3>Miscellaneous Settings</h3>
 							<p>Configure devices, verbosity, and random seed for reproducibility.</p>
+							<div class="row gtr-uniform">
+								<div class="col-6 col-12-small">
+									<label for="misc-devices">Devices</label>
+									<input type="text" name="misc-devices" id="misc-devices" value="" placeholder="e.g. &quot;cuda:0, cuda:1&quot; or leave blank for CPU" />
 	
-							<div class="col-6 col-12-xsmall">
-								<label for="misc-devices">Devices</label>
-								<input type="text" name="misc-devices" id="misc-devices" value="" placeholder="e.g. cuda:0, cuda:1, or leave blank for CPU" />
-							</div>
-							<div class="col-6 col-12-small" style="margin-top: 0.4rem;">
-								<input type="checkbox" id="misc-verbose" name="misc-verbose">
-								<label for="misc-verbose">Verbose output</label>
-							</div>
-							<div class="col-6 col-12-xsmall" style="margin-top: 1rem;">
-								<label for="misc-seed">Random Seed</label>
-								<input type="text" name="misc-seed" id="misc-seed" value="42" placeholder="Random seed" />
+									<div style="margin-top: 1rem;">
+										<label for="misc-seed">Random Seed</label>
+										<input type="text" name="misc-seed" id="misc-seed" value="42" placeholder="Random seed" />
+									</div>
+									<div style="margin-top: 1rem;">
+										<input type="checkbox" id="misc-verbose" name="misc-verbose">
+										<label for="misc-verbose">Verbose output (does not change much currently)</label>
+									</div>
+								</div>
 							</div>
 						</section>
 	
 						<!-- Models to Train (Benchmark Tasks) -->
 						<section style="margin-top: 2rem;">
 							<h3>Models to Train (Benchmark Tasks)</h3>
-							<p>Enable and configure different benchmarking scenarios such as interpolation, extrapolation, sparse training data, uncertainty quantification, and batch size scaling.</p>
+							<p>Enable and configure interpolation, extrapolation, sparse data usage, uncertainty quantification, and batch size scaling.</p>
 	
-							<h4>Interpolation</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-interpolation" name="bench-interpolation" checked
-									onchange="toggleElementVisible('div-interpolation_params', this.checked)">
-								<label for="bench-interpolation">Enable Interpolation</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-interpolation_params">
-								<label for="bench-interpol_ts">Use every n-th timestep:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="bench-interpol_ts" id="bench-interpol_ts"
-											value="2, 3, 4, 5, 6, 7, 8, 9, 10" placeholder="2, 3, ..." /></li>
-								</ul>
-							</div>
-	
-							<h4>Extrapolation</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-extrapolation" name="bench-extrapolation" checked
-									onchange="toggleElementVisible('div-extrapolation_params', this.checked)">
-								<label for="bench-extrapolation">Enable Extrapolation</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-extrapolation_params">
-								<label for="bench-extrapol_cutoffs">Cutoff at timestep n:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="bench-extrapol_cutoffs" id="bench-extrapol_cutoffs"
-											value="50, 60, 70, 80, 90" placeholder="50, 60, ..." /></li>
-								</ul>
+							<!-- Interpolation -->
+							<div class="row gtr-uniform">
+								<div class="col-6 col-12-small">
+									<h4>Interpolation</h4>
+									<input type="checkbox" id="bench-interpolation" name="bench-interpolation" checked
+										onchange="toggleElementVisible('div-interpolation_params', this.checked)">
+									<label for="bench-interpolation">Enable Interpolation</label>
+								</div>
+								<div class="col-6 col-12-xsmall" id="div-interpolation_params">
+									<label for="bench-interpol_ts">Use every n-th timestep:</label>
+									<ul class="actions fit">
+										<li><input type="text" name="bench-interpol_ts" id="bench-interpol_ts"
+												value="2, 3, 4, 5, 6, 7, 8, 9, 10" placeholder="2, 3, ..." /></li>
+									</ul>
+								</div>
 							</div>
 	
-							<h4>Sparse Training Data</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-sparse" name="bench-sparse" checked
-									onchange="toggleElementVisible('div-sparse_params', this.checked)">
-								<label for="bench-sparse">Enable Sparse Training Data</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-sparse_params">
-								<label for="bench-sparse_factors">Take every n-th sample:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="bench-sparse_factors" id="bench-sparse_factors"
-											value="2, 4, 8, 16, 32" placeholder="2, 4, 8, ..." /></li>
-								</ul>
-							</div>
-	
-							<h4>Uncertainty Quantification</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-uq" name="bench-uq" checked
-									onchange="toggleElementVisible('div-uq_params', this.checked)">
-								<label for="bench-uq">Enable Uncertainty Quantification</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-uq_params">
-								<label for="bench-uq_ensemble_size">Ensemble size:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="bench-uq_ensemble_size" id="bench-uq_ensemble_size"
-											value="5" placeholder="Number of models" /></li>
-								</ul>
+							<!-- Extrapolation -->
+							<div class="row gtr-uniform" style="margin-top: 1rem;">
+								<div class="col-6 col-12-small">
+									<h4>Extrapolation</h4>
+									<input type="checkbox" id="bench-extrapolation" name="bench-extrapolation" checked
+										onchange="toggleElementVisible('div-extrapolation_params', this.checked)">
+									<label for="bench-extrapolation">Enable Extrapolation</label>
+								</div>
+								<div class="col-6 col-12-xsmall" id="div-extrapolation_params">
+									<label for="bench-extrapol_cutoffs">Cutoff at timesteps...</label>
+									<ul class="actions fit">
+										<li><input type="text" name="bench-extrapol_cutoffs" id="bench-extrapol_cutoffs"
+												value="50, 60, 70, 80, 90" placeholder="50, 60, ..." /></li>
+									</ul>
+								</div>
 							</div>
 	
-							<h4>Batch Size Scaling</h4>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-batch_scaling" name="bench-batch_scaling"
-									onchange="toggleElementVisible('div-batch_scaling_params', this.checked)">
-								<label for="bench-batch_scaling">Enable Batch Size Scaling</label>
-							</div>
-							<div class="col-6 col-12-xsmall" id="div-batch_scaling_params" style="display: none;">
-								<label for="bench-batch_scaling_factors">Batch sizes to evaluate:</label>
-								<ul class="actions fit">
-									<li><input type="text" name="bench-batch_scaling_factors"
-											id="bench-batch_scaling_factors" value="" placeholder="128, 256, ..." /></li>
-								</ul>
+							<!-- Sparse -->
+							<div class="row gtr-uniform" style="margin-top: 1rem;">
+								<div class="col-6 col-12-small">
+									<h4>Sparse Training Data</h4>
+									<input type="checkbox" id="bench-sparse" name="bench-sparse" checked
+										onchange="toggleElementVisible('div-sparse_params', this.checked)">
+									<label for="bench-sparse">Enable Sparse Training Data</label>
+								</div>
+								<div class="col-6 col-12-xsmall" id="div-sparse_params">
+									<label for="bench-sparse_factors">Use every n-th sample:</label>
+									<ul class="actions fit">
+										<li><input type="text" name="bench-sparse_factors" id="bench-sparse_factors"
+												value="2, 4, 8, 16, 32" placeholder="2, 4, 8, ..." /></li>
+									</ul>
+								</div>
 							</div>
 	
+							<!-- UQ -->
+							<div class="row gtr-uniform" style="margin-top: 1rem;">
+								<div class="col-6 col-12-small">
+									<h4>Uncertainty Quantification</h4>
+									<input type="checkbox" id="bench-uq" name="bench-uq" checked
+										onchange="toggleElementVisible('div-uq_params', this.checked)">
+									<label for="bench-uq">Enable Uncertainty Quantification</label>
+								</div>
+								<div class="col-6 col-12-xsmall" id="div-uq_params">
+									<label for="bench-uq_ensemble_size">Ensemble size:</label>
+									<ul class="actions fit">
+										<li><input type="text" name="bench-uq_ensemble_size" id="bench-uq_ensemble_size"
+												value="5" placeholder="Number of models" /></li>
+									</ul>
+								</div>
+							</div>
+	
+							<!-- Batch Scaling -->
+							<div class="row gtr-uniform" style="margin-top: 1rem;">
+								<div class="col-6 col-12-small">
+									<h4>Batch Size Scaling</h4>
+									<input type="checkbox" id="bench-batch_scaling" name="bench-batch_scaling"
+										onchange="toggleElementVisible('div-batch_scaling_params', this.checked)">
+									<label for="bench-batch_scaling">Enable Batch Size Scaling</label>
+								</div>
+								<div class="col-6 col-12-xsmall" id="div-batch_scaling_params" style="display: none;">
+									<label for="bench-batch_scaling_factors">Batch sizes to evaluate:</label>
+									<ul class="actions fit">
+										<li><input type="text" name="bench-batch_scaling_factors"
+												id="bench-batch_scaling_factors" value="" placeholder="128, 256, ..." /></li>
+									</ul>
+								</div>
+							</div>
 						</section>
 	
 						<!-- Evaluations -->
 						<section style="margin-top: 2rem;">
 							<h3>Evaluations During Benchmark</h3>
-							<p>Select which evaluations to perform and record during the benchmark.</p>
-	
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-losses" name="bench-losses" checked>
-								<label for="bench-losses">Save and plot losses</label>
-							</div>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-dyn_acc" name="bench-dyn_acc" checked>
-								<label for="bench-dyn_acc">Save and plot dynamic accuracy</label>
-							</div>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-timing" name="bench-timing" checked>
-								<label for="bench-timing">Save and plot timing</label>
-							</div>
-							<div class="col-6 col-12-small">
-								<input type="checkbox" id="bench-compute" name="bench-compute">
-								<label for="bench-compute">Measure Compute performance</label>
+							<p>Select which evaluations to perform and record.</p>
+							<div class="row gtr-uniform">
+								<div class="col-6 col-12-small">
+									<input type="checkbox" id="bench-losses" name="bench-losses" checked>
+									<label for="bench-losses">Save and plot losses</label>
+								</div>
+								<div class="col-6 col-12-small">
+									<input type="checkbox" id="bench-dyn_acc" name="bench-dyn_acc" checked>
+									<label for="bench-dyn_acc">Save and plot dynamic accuracy</label>
+								</div>
+								<div class="col-6 col-12-small">
+									<input type="checkbox" id="bench-timing" name="bench-timing" checked>
+									<label for="bench-timing">Save and plot timing</label>
+								</div>
+								<div class="col-6 col-12-small">
+									<input type="checkbox" id="bench-compute" name="bench-compute">
+									<label for="bench-compute">Measure Compute performance</label>
+								</div>
+								<div style="margin-bottom: 1rem;">
+									<input type="checkbox" id="misc-compare" name="misc-compare">
+									<label for="misc-compare">Compare the surrogates with each other in the benchmark?</label>
+								</div>
 							</div>
 						</section>
 	
 						<hr />
 						<section>
 							<ul class="actions">
-								<li><input type="button" value="Generate Config" class="primary"
-										onclick="downloadYAML()" /></li>
+								<li><input type="button" value="Generate Config" class="primary" onclick="downloadYAML()" /></li>
 								<li><input type="reset" value="Reset" onclick="fullResetForm()" /></li>
 							</ul>
 						</section>
