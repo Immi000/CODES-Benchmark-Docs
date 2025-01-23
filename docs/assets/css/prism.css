@@ -1,96 +1,81 @@
-/* PrismJS 1.29.0
-https://prismjs.com/download.html#themes=prism-tomorrow&languages=python&plugins=toolbar+copy-to-clipboard+match-braces */
-/**
- * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
- * Based on https://github.com/chriskempson/tomorrow-theme
- * @author Rose Pritchard
- */
+/* PrismJS (Lighter Theme) */
+/* ----------------------------------------------- */
 
 code[class*="language-"],
 pre[class*="language-"] {
-	color: #ccc;
-	background: none;
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
-
+  color: #333;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
 }
 
 /* Code blocks */
 pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
-	overflow: auto;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #2d2d2d;
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  background: #f7f7f7;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
 }
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
-	white-space: normal;
+  background: #f7f7f7;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  padding: 0.1em 0.3em;
+  white-space: normal;
 }
 
+/* Tokens */
 .token.comment,
 .token.block-comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: #999;
+  color: #999;
 }
 
 .token.punctuation {
-	color: #ccc;
+  color: #666;
 }
 
 .token.tag,
-.token.attr-name,
-.token.namespace,
 .token.deleted {
-	color: #e2777a;
+  color: #c82829;
 }
 
 .token.function-name {
-	color: #6196cc;
+  color: #4271ae;
 }
 
 .token.boolean,
 .token.number,
 .token.function {
-	color: #f08d49;
+  color: #f5871f;
 }
 
 .token.property,
 .token.class-name,
 .token.constant,
 .token.symbol {
-	color: #f8c555;
+  color: #eab700;
 }
 
 .token.selector,
-.token.important,
 .token.atrule,
 .token.keyword,
 .token.builtin {
-	color: #cc99cd;
+  color: #8959a8; /* Could align with #563a90 if you like */
 }
 
 .token.string,
@@ -98,124 +83,94 @@ pre[class*="language-"] {
 .token.attr-value,
 .token.regex,
 .token.variable {
-	color: #7ec699;
+  color: #718c00;
 }
 
 .token.operator,
 .token.entity,
 .token.url {
-	color: #67cdcc;
+  color: #3e999f;
 }
 
 .token.important,
 .token.bold {
-	font-weight: bold;
+  font-weight: bold;
 }
+
 .token.italic {
-	font-style: italic;
+  font-style: italic;
 }
 
 .token.entity {
-	cursor: help;
+  cursor: help;
 }
 
 .token.inserted {
-	color: green;
+  color: green;
 }
 
+/* Plugin: code-toolbar */
 div.code-toolbar {
-	position: relative;
+  position: relative;
 }
 
 div.code-toolbar > .toolbar {
-	position: absolute;
-	z-index: 10;
-	top: .3em;
-	right: .2em;
-	transition: opacity 0.3s ease-in-out;
-	opacity: 0;
+  position: absolute;
+  z-index: 10;
+  top: 0.3em;
+  right: 0.2em;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
 }
 
-div.code-toolbar:hover > .toolbar {
-	opacity: 1;
-}
-
-/* Separate line b/c rules are thrown out if selector is invalid.
-   IE11 and old Edge versions don't support :focus-within. */
+div.code-toolbar:hover > .toolbar,
 div.code-toolbar:focus-within > .toolbar {
-	opacity: 1;
+  opacity: 1;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item {
-	display: inline-block;
-}
-
-div.code-toolbar > .toolbar > .toolbar-item > a {
-	cursor: pointer;
-}
-
-div.code-toolbar > .toolbar > .toolbar-item > button {
-	background: none;
-	border: 0;
-	color: inherit;
-	font: inherit;
-	line-height: normal;
-	overflow: visible;
-	padding: 0;
-	-webkit-user-select: none; /* for button */
-	-moz-user-select: none;
-	-ms-user-select: none;
+  display: inline-block;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a,
 div.code-toolbar > .toolbar > .toolbar-item > button,
 div.code-toolbar > .toolbar > .toolbar-item > span {
-	color: #bbb;
-	font-size: .8em;
-	padding: 0 .5em;
-	background: #f5f2f0;
-	background: rgba(224, 224, 224, 0.2);
-	box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
-	border-radius: .5em;
+  color: #444;
+  font-size: 0.8em;
+  padding: 0 0.5em;
+  background: #eee;
+  border-radius: 0.25em;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  margin-left: 0.25em;
 }
 
-div.code-toolbar > .toolbar > .toolbar-item > a:hover,
-div.code-toolbar > .toolbar > .toolbar-item > a:focus,
-div.code-toolbar > .toolbar > .toolbar-item > button:hover,
-div.code-toolbar > .toolbar > .toolbar-item > button:focus,
-div.code-toolbar > .toolbar > .toolbar-item > span:hover,
-div.code-toolbar > .toolbar > .toolbar-item > span:focus {
-	color: inherit;
-	text-decoration: none;
-}
-
+/* Rainbow match-braces plugin (if used) */
 .token.punctuation.brace-hover,
 .token.punctuation.brace-selected {
-	outline: solid 1px;
+  outline: 1px solid #aaa;
 }
 
 .rainbow-braces .token.punctuation.brace-level-1,
 .rainbow-braces .token.punctuation.brace-level-5,
 .rainbow-braces .token.punctuation.brace-level-9 {
-	color: #E50;
-	opacity: 1;
+  color: #E50;
 }
+
 .rainbow-braces .token.punctuation.brace-level-2,
 .rainbow-braces .token.punctuation.brace-level-6,
 .rainbow-braces .token.punctuation.brace-level-10 {
-	color: #0B3;
-	opacity: 1;
+  color: #0B3;
 }
+
 .rainbow-braces .token.punctuation.brace-level-3,
 .rainbow-braces .token.punctuation.brace-level-7,
 .rainbow-braces .token.punctuation.brace-level-11 {
-	color: #26F;
-	opacity: 1;
+  color: #26F;
 }
+
 .rainbow-braces .token.punctuation.brace-level-4,
 .rainbow-braces .token.punctuation.brace-level-8,
 .rainbow-braces .token.punctuation.brace-level-12 {
-	color: #E0E;
-	opacity: 1;
+  color: #E0E;
 }
-
