@@ -1,6 +1,6 @@
 /* main.css */
 /* ----------------------------------------------------------------------- */
-/* Basic resets */
+/* Basic Resets */
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -11,8 +11,8 @@ u, i, center, dl, dt, dd, ol, ul, li, fieldset,
 form, label, legend, table, caption, tbody,
 tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
-footer, header, hgroup, menu, nav, output, ruby,
-section, summary, time, mark, audio, video {
+footer, header, hgroup, menu, nav, section, summary, ruby,
+time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -27,22 +27,31 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
-  line-height: 1;
+  line-height: 1.6;
   -webkit-text-size-adjust: none;
   background: #ffffff; /* Light background */
   color: #333333;      /* Dark text */
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: normal;
+  max-width: 1200px; /* Limit the maximum width of content */
+  margin: 0 auto; /* Center the content */
+  padding: 0 1em; /* Add some horizontal padding */
 }
 
 /* Typography */
 
 a {
-  color: #563a90; /* Use brand purple for links */
+  color: #563a90; /* Brand purple for links */
   text-decoration: none;
   border-bottom: 1px dotted rgba(0,0,0,0.2);
   transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+
+#nav-menu ul li a.active {
+  color: #ffffff;
+  text-decoration: none; /* Remove underline */
+  border-bottom: none; /* Remove border underline */
 }
 
 a:hover {
@@ -57,7 +66,7 @@ strong, b {
 
 p {
   margin: 0 0 1.5em 0;
-  line-height: 1.75;
+  line-height: 1.8; /* Increased line height for better readability */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -79,7 +88,7 @@ h1.major {
 
 h1.major:after {
   /* Updated viridis-like gradient using brand colors */
-  background-image: linear-gradient(to right, #563a90, #447f92, #64c479);
+  background-image: linear-gradient(to right, #563a90, #447f92, #64c479, #dfdc40);
   content: '';
   display: block;
   height: 4px;
@@ -89,7 +98,6 @@ h1.major:after {
   position: absolute;
 }
 
-/* Subheadings */
 h2 { font-size: 1.5em; }
 h3 { font-size: 1.25em; }
 h4 { font-size: 1.1em; }
@@ -112,7 +120,7 @@ code {
   padding: 0.2em 0.4em;
 }
 
-/* Horizontal rule */
+/* Horizontal Rule */
 hr {
   border: 0;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -126,12 +134,17 @@ ol, ul {
 }
 
 ul li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0em; /* Increased margin for better spacing */
 }
 
 ul.alt li {
   border-top: 1px solid rgba(0,0,0,0.1);
-  padding: 0.5em 0;
+  padding: 0.75em 0;
+}
+
+ul.alt li:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 /* Tables */
@@ -161,6 +174,14 @@ th {
   color: #333;
 }
 
+tfoot {
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
 /* Forms */
 form {
   margin: 0 0 2em;
@@ -168,7 +189,7 @@ form {
 
 label {
   display: block;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
   font-weight: bold;
   color: #222;
 }
@@ -202,10 +223,9 @@ textarea:focus {
 }
 
 select {
-  background-image: none; /* remove the default arrow with data URI if you prefer */
+  background-image: none; /* Remove the default arrow */
 }
 
-/* Checkboxes / Radio */
 input[type="checkbox"],
 input[type="radio"] {
   display: inline-block;
@@ -221,6 +241,32 @@ input[type="radio"] + label {
   margin-bottom: 0;
   cursor: pointer;
   font-weight: normal;
+}
+
+input[type="checkbox"] + label:before,
+input[type="radio"] + label:before {
+  /* Simple CSS checkboxes/radios */
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+input[type="checkbox"]:checked + label:before,
+input[type="radio"]:checked + label:before {
+  background: #563a90;
+  border-color: #563a90;
+}
+
+input[type="checkbox"]:focus + label:before,
+input[type="radio"]:focus + label:before {
+  border-color: #447f92;
+  box-shadow: 0 0 0 1px #447f92;
 }
 
 /* Buttons */
@@ -255,7 +301,7 @@ button:hover {
   border-color: #bbb;
 }
 
-/* Primary button variant */
+/* Primary Button Variant */
 .button.primary,
 input[type="submit"].primary,
 input[type="reset"].primary,
@@ -285,7 +331,7 @@ button:disabled {
   cursor: default;
 }
 
-/* .row, .col-* classes remain for layout convenience */
+/* Grid System */
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -299,9 +345,91 @@ button:disabled {
   padding-left: 1.5em;
 }
 
-/* ... (Keeping the rest of the .row/.col classes for your layout) ... */
+.row > .col-1 {
+  width: 8.33333%;
+}
 
-/* .features, .spotlights, etc. – color adjustments */
+.row > .col-2 {
+  width: 16.66667%;
+}
+
+.row > .col-3 {
+  width: 25%;
+}
+
+.row > .col-4 {
+  width: 33.33333%;
+}
+
+.row > .col-5 {
+  width: 41.66667%;
+}
+
+.row > .col-6 {
+  width: 50%;
+}
+
+.row > .col-7 {
+  width: 58.33333%;
+}
+
+.row > .col-8 {
+  width: 66.66667%;
+}
+
+.row > .col-9 {
+  width: 75%;
+}
+
+.row > .col-10 {
+  width: 83.33333%;
+}
+
+.row > .col-11 {
+  width: 91.66667%;
+}
+
+.row > .col-12 {
+  width: 100%;
+}
+
+.row.gtr-uniform > * {
+  padding-top: 1.5em;
+}
+
+.row.gtr-25 {
+  margin-left: -0.375em;
+}
+
+.row.gtr-25 > * {
+  padding-left: 0.375em;
+}
+
+.row.gtr-50 {
+  margin-left: -0.75em;
+}
+
+.row.gtr-50 > * {
+  padding-left: 0.75em;
+}
+
+.row.gtr-150 {
+  margin-left: -2.25em;
+}
+
+.row.gtr-150 > * {
+  padding-left: 2.25em;
+}
+
+.row.gtr-200 {
+  margin-left: -3em;
+}
+
+.row.gtr-200 > * {
+  padding-left: 3em;
+}
+
+/* Features */
 .features {
   display: flex;
   flex-wrap: wrap;
@@ -322,7 +450,7 @@ button:disabled {
   border-left: 1px solid rgba(0,0,0,0.1);
 }
 
-/* Spotlights, remove dark overlay, switch to lighter backgrounds */
+/* Spotlights */
 .spotlights > section {
   display: flex;
   flex-direction: row;
@@ -350,29 +478,76 @@ button:disabled {
   background-color: #eeeeee;
 }
 
-/* Wrappers */
+.spotlights > section > .content > .inner {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.spotlights > section.inactive > .content > .inner,
+body.is-preload .spotlights > section > .content > .inner {
+  opacity: 0;
+  transform: translateY(1em);
+}
+
+@media screen and (max-width: 980px) {
+  .spotlights > section {
+    display: block;
+  }
+  .spotlights > section > .image {
+    width: 100%;
+    height: 50vh;
+  }
+  .spotlights > section > .content {
+    width: 100%;
+    padding: 2em;
+  }
+}
+
+@media screen and (max-width: 736px) {
+  .spotlights > section > .image {
+    height: 50vh;
+    min-height: 15em;
+  }
+  .spotlights > section > .content {
+    padding: 2em;
+  }
+}
+
+/* Wrapper */
 .wrapper {
   position: relative;
 }
 
 .wrapper > .inner {
-  max-width: 75em;
+  max-width: 800px; /* Reduced max-width for better readability */
   margin: 0 auto;
   padding: 3em 2em;
   box-sizing: border-box;
   width: 100%;
 }
 
-/* Header
-   (If you want a white header with dark text, invert the colors below)
-   Or keep an accent color for the header background (#563a90). 
-*/
+/* Adjust for smaller screens */
+@media screen and (max-width: 1280px) {
+  .wrapper > .inner {
+    padding: 2em 1.5em;
+  }
+}
+
+@media screen and (max-width: 736px) {
+  .wrapper > .inner {
+    padding: 1.5em 1em;
+  }
+}
+
+/* Header */
 #header {
   display: flex;
   align-items: center;
-  background-color: #563a90; /* brand accent background */
+  background-color: #563a90; /* Brand accent background */
   padding: 1em 2em;
   justify-content: space-between;
+  position: relative; /* To position the hamburger */
 }
 
 #header a {
@@ -388,51 +563,62 @@ button:disabled {
   border: none;
 }
 
-#header > nav {
+#header .logo span {
+  font-size: 1.5em; /* Adjusted from inline 50px to relative units */
+  color: #D6CDEA; 
+  line-height: 1;
+  vertical-align: middle;
+}
+
+#nav-menu {
   margin-left: auto;
   flex-shrink: 0;
 }
 
-#header > nav > ul {
+#nav-menu ul {
   display: flex;
-  gap: 1.5em;
+  gap: 2em; /* Increased gap for more space between nav items */
   list-style: none;
   margin: 0;
 }
 
-#header > nav > ul > li a {
+#nav-menu ul li a {
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.85em;
   font-weight: bold;
   text-transform: uppercase;
+  letter-spacing: 0.2em; /* Increased letter-spacing */
   transition: color 0.2s;
 }
 
-#header > nav > ul > li a:hover {
+#nav-menu ul li a:hover {
   color: #fff;
 }
 
-#header > nav > ul > li a.active {
-  color: #fff;
-  text-decoration: underline;
+#nav-menu ul li a.active {
+  color: #ffffff;
+  text-decoration: none; /* Remove underline */
+  border-bottom: none; /* Remove border underline */
 }
 
-/* Responsive menu toggle */
+/* Responsive Menu Toggle */
 #menu-toggle {
   display: none;
   background: none;
   border: none;
-  font-size: 1em;
+  font-size: 1.5em; /* Increased size */
   cursor: pointer;
   color: #fff;
   transition: color 0.3s;
+  position: absolute;
+  right: 1em;
 }
 
 #menu-toggle:hover {
   color: #ccc;
 }
 
-@media screen and (max-width: 910px) {
+@media screen and (max-width: 1000px) {
   #header {
     flex-wrap: wrap;
     padding: 1em;
@@ -440,32 +626,62 @@ button:disabled {
   #menu-toggle {
     display: block;
   }
-  #header > nav {
+  #nav-menu {
     display: none;
     width: 100%;
     flex-direction: column;
     background-color: #563a90;
     padding: 1em 0;
     border-radius: 0.5em;
+    position: absolute;
+    top: 100%;
+    left: 0;
   }
-  #header > nav.active {
+  #nav-menu.active {
     display: flex;
   }
-  #header > nav > ul {
+  #nav-menu ul {
     flex-direction: column;
     gap: 1em;
   }
+  #nav-menu ul li {
+    margin: 0;
+  }
+  #nav-menu ul li a {
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  #nav-menu ul li a:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  /* Hide icons when menu is active */
+  #nav-menu.active ~ .icons {
+    display: none;
+  }
 }
 
-/* Icons in header (optional) */
-#header .icons {
+/* Icons in Header */
+.icons {
   display: flex;
   gap: 1em;
   margin-left: 2em;
 }
-#header .icons a {
+
+.icons a {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 1.2em;
+  font-size: 1.5em;
+  transition: color 0.3s ease-in-out;
+}
+
+.icons a:hover {
+  color: #fff;
+}
+
+/* Hide Icons on Small Screens */
+@media screen and (max-width: 1000px) {
+  .icons {
+    display: none;
+  }
 }
 
 /* Footer */
@@ -479,7 +695,7 @@ button:disabled {
 
 #footer .inner {
   margin: 0 auto;
-  max-width: 75em;
+  max-width: 1000px;
   padding: 0 2em;
   box-sizing: border-box;
 }
@@ -489,9 +705,9 @@ button:disabled {
   margin: 1em 0 0;
 }
 
-/* Sidebar (if used) - lighten or remove as needed */
+/* Sidebar (if used) - Lightened or removed */
 #sidebar {
-  display: none; /* If you're not actually using a sidebar, hide it. */
+  display: none; /* Hide if not used */
   background: #f8f8f8;
   color: #333;
   width: 18em;
@@ -513,4 +729,38 @@ button:disabled {
 
 #sidebar nav a:hover {
   border-bottom: 2px solid #563a90;
+}
+
+/* Reduce Maximum Width of Paragraphs */
+.wrapper > .inner {
+  max-width: 950px; /* Adjusted max-width for better readability */
+}
+
+/* Additional Styling for Smooth Transition */
+body.is-preload #nav-menu > ul > li a,
+body.is-preload .icons a {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+body.is-preload #nav-menu.active > ul > li a,
+body.is-preload .icons.active a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional: Viridis-like Gradient Separators for Headings */
+h2, h3, h4, h5, h6 {
+  position: relative;
+}
+
+h2:after, h3:after, h4:after, h5:after, h6:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(to right, #563a90, #447f92);
+  margin-top: 0.3em;
+  border-radius: 2px;
 }
